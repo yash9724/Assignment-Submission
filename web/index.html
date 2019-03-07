@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Homepage</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+<!--        <script type="text/javascript" src="scripts/jquery.js"></script>
+        <script type="text/javascript" src="scripts/login.js"></script>-->
+       <script>
+           var ajaxreq;
+           var username = document.getElementById("username").value;
+           var password = document.getElementById("password").value;
+           function validate(){
+               if(username === "" || password === ""){
+                   document.getElementById("loginresult").innerText = "Both fields are mandatory";
+                   return;
+               }else{
+                    document.getElementById("loginresult").innerText = ""; 
+                    //sendrequest();
+               }
+           }
+//           function sendrequest(){
+//               ajaxreq = new XMLHttpRequest();
+//               ajaxreq.onreadystatechange = processresponse;
+//               ajaxreq.open("POST","logincontrol",true);
+//               ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+//               ajaxreq.send("username="+username,"password="+password,"usertype="+usertype);
+//           }
+//           function processresponse(){
+//               if(ajaxreq.readyState === 4){
+//                   
+//               }
+//           }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Login Here</h2><hr>
+           
+            <span id="loginresult"></span><br>
+            <b>Username:</b>&nbsp;<input type="text" name="username" id="username" ><br>
+            <br>
+            <b>Password:</b>&nbsp;&nbsp;<input type="password" name="password" id="password" ><br>
+            <br>
+             <b>Usertype:</b>&nbsp;&nbsp; 
+            <select  name="usertype" id="usertype">
+                <option>STUDENT</option>
+                <option>FACULTY</option>
+                <option>ADMIN</option>
+            </select>
+            <br>
+            <input type="button" value="Login" name="Login" id="loginbtn" onclick="validate()" ><br>
+            <b>New User?<a href="">Register</a></b>
+        </div>
+    </body>
+</html>
