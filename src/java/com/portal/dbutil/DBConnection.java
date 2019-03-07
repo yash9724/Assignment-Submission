@@ -19,12 +19,12 @@ public class DBConnection {
     {
         try{
             
-//            File a = new File(".");
-//            System.out.println(a.getCanonicalPath());
-//            for(String filenames : a.list())
-//                System.out.println(filenames);
+            File a = new File(".");
+            System.out.println(a.getCanonicalPath());
+            for(String filenames : a.list())
+                System.out.println(filenames);
             Properties dbConfig = new Properties();
-            dbConfig.load(new FileInputStream(new File("./configuration.properties")));
+            dbConfig.load(new FileInputStream(new File("E:\\Tomcat\\bin\\configuration.properties")));
             String driver = dbConfig.getProperty("driver");
             String url = dbConfig.getProperty("url");
             String username = dbConfig.getProperty("username");

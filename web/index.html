@@ -18,7 +18,7 @@ and open the template in the editor.
         <div class="container">
             <h2>Login Here</h2><hr>
            
-            <span id="loginresult"></span><br>
+            <span id="loginresult"></span>
             <b>Username:</b>&nbsp;<input type="text" name="username" id="username" ><br>
             <br>
             <b>Password:</b>&nbsp;&nbsp;<input type="text" name="password" id="pwd" ><br>
@@ -45,7 +45,7 @@ and open the template in the editor.
 //                console.log(username.length+"-----"+password);
                if(username === "" || password === "" ){
                    console.log("if xecuted");
-                   document.getElementById("loginresult").innerText = "Both fields are mandatory";
+                   document.getElementById("loginresult").innerHTML = "<h6>Both fields are mandatory</h6><br>";
 //                   setTimeout(function(){
 //                        document.getElementById("loginresult").innerText.remove;
 //                   },2000);
@@ -53,9 +53,9 @@ and open the template in the editor.
                    return;
                 }
                else{
-//                   console.log("else");
-                   document.getElementById("loginresult").innerText = ""; 
-                   sendrequest();
+//                  console.log("else");
+                    document.getElementById("loginresult").innerText = ""; 
+                    sendrequest();
                }
            }
            function sendrequest(){
@@ -68,6 +68,7 @@ and open the template in the editor.
            function processresponse(){
                if(ajaxreq.readyState === 4){
                    console.log("processresponse executed");
+                   document.getElementById("loginresult").innerHTML = ajaxreq.responseText;
                }
            }
         </script>

@@ -41,14 +41,18 @@ public class LoginControllerServlet extends HttpServlet {
         user.setUsertype(usertype);
         RequestDispatcher rd = null;
         try{
+            System.out.println("above validate user");
             boolean result = LoginDAO.validateUser(user);
+            System.out.println("below validate user");
             request.setAttribute("result",result);
             request.setAttribute("username",username);
             request.setAttribute("usertype", usertype);
             rd = request.getRequestDispatcher("loginresponse.jsp");
+            System.out.println("inside try");
         }catch(Exception e){
             request.setAttribute("exception", e);
             rd = request.getRequestDispatcher("showexception.jsp");
+            System.out.println("inside catch");
         }finally{
             rd.forward(request, response);
         }
