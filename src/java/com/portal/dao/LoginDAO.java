@@ -20,21 +20,25 @@ public class LoginDAO {
         private static PreparedStatement ps;
         static{
             try{
-                ps = DBConnection.getConnection().prepareStatement("Select * from ? where username=? and password=? and status=active");
+                ps = DBConnection.getConnection().prepareStatement("Select * from Users where usertype=? and username=? and password=?");
             }catch(SQLException e){
                 System.out.println("Error in DB communication: "+e);
             }
         }
-    
+        
         public static boolean validateUser(UserDTO user) throws SQLException{
-            boolean result = false;
+            
             ps.setString(1,user.getUsertype());
+            System.out.println("Usertype in logindao: "+user.getUsertype().getClass());
             ps.setString(2,user.getUsername());
+            System.out.println("Username in logindao:"+user.getUsername());
             ps.setString(3,user.getPassword());
+            System.out.println("password in logindao:"+user.getPassword());
+            //ps.setString(4,"active");
+            System.out.println("Above executeQuery");
             ResultSet rs = ps.executeQuery();
-            if(rs.next())
-                result=true;
-            return result;
+            System.out.println("Below executeQuery");
+            return rs.next();
         
     }
 }

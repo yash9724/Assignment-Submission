@@ -13,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  *
@@ -32,27 +34,28 @@ public class LoginControllerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String usertype = request.getParameter("usertype");
-        UserDTO user = new UserDTO();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setUsertype(usertype);
         RequestDispatcher rd = null;
         try{
-            System.out.println("above validate user");
+            String json_data = request.getParameter("json_data");
+            JSONObject json_obj = (JSONObject)new JSONParser().parse(json_data);
+            String username = (String)json_obj.get("username");
+            String password = (String)json_obj.get("password");
+            String usertype = (String)json_obj.get("usertype");
+            UserDTO user = new UserDTO();
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setUsertype(usertype);
             boolean result = LoginDAO.validateUser(user);
-            System.out.println("below validate user");
-            request.setAttribute("result",result);
+            //System.out.println("Result in Loginntroller:" + result);
             request.setAttribute("username",username);
-            request.setAttribute("usertype", usertype);
+            request.setAttribute("usertype",usertype);
+            request.setAttribute("result",result);
             rd = request.getRequestDispatcher("loginresponse.jsp");
-            System.out.println("inside try");
         }catch(Exception e){
             request.setAttribute("exception", e);
             rd = request.getRequestDispatcher("showexception.jsp");
-            System.out.println("inside catch");
+            System.out.println("inside catch:"+e);
+            e.printStackTrace();
         }finally{
             rd.forward(request, response);
         }
