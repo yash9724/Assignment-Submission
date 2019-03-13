@@ -13,8 +13,9 @@
     </head>
     <body>
         <form action="FileUploadServlet" method="post" enctype="multipart/form-data">  
-        Select File:  <input type="file" name="fname"/><br/>  
-        <input type="submit" value="upload"/>  
+            <pre>
+    Select File:  <input type="file" name="filename"/><br/>  
+    <input type="submit" value="Upload"/>  
         </form>
     </body>
 </html>

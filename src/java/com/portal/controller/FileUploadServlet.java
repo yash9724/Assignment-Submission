@@ -11,9 +11,11 @@ public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {  
   
 response.setContentType("text/html");  
-PrintWriter out = response.getWriter();  
-          
+PrintWriter pw = response.getWriter();
 MultipartRequest m =new MultipartRequest(request,"e:/new");  
-out.print("successfully uploaded");  
+pw.print("successfully uploaded");
+pw.print("<p>File is"+request.getParameter("filename")+ "</p>");
+String url = "FileDownloadServlet?filename="+request.getParameter("filename");
+pw.println("To Download <a href="+url+">click here</a>");
 }  
 }

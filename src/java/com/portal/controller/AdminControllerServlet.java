@@ -7,6 +7,7 @@ package com.portal.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +36,13 @@ public class AdminControllerServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             String username = (String)session.getAttribute("username");
+            if(username == null){
+                session.invalidate();
+                response.sendRedirect("accessdenied.html");
+                return;
+            }
+            
+            RequestDispatcher rd = null;
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -43,6 +51,7 @@ public class AdminControllerServlet extends HttpServlet {
             out.println("<body>");
             out.println("<h1>AdminControllerServlet for user: " + username + "</h1>");
             out.println("<a href=\"FileUpload.jsp\"><h3>File Upload</h3></a>");
+            out.println("<a href='LoginControllerServlet?logout=logout'><h3>Logout</h3></a>");
             out.println("</body>");
             out.println("</html>");
         }

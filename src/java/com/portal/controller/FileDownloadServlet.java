@@ -11,7 +11,7 @@ package com.portal.controller;
       
     response.setContentType("text/html");  
     PrintWriter out = response.getWriter();  
-    String filename = "ADAFIRST.pdf";   
+    String filename = request.getParameter("filename");   
     String filepath = "E:\\new\\";   
     response.setContentType("APPLICATION/OCTET-STREAM");   
     response.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");   

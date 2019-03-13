@@ -8,11 +8,13 @@ package com.portal.controller;
 import com.portal.dao.LoginDAO;
 import com.portal.dto.UserDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -35,8 +37,24 @@ public class LoginControllerServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher rd = null;
+        String logout = request.getParameter("logout");
+        if(logout != null){
+            HttpSession session = request.getSession();
+            session.invalidate();
+            response.sendRedirect("index.html");
+            return;
+        }
         try{
             String json_data = request.getParameter("json_data");
+            PrintWriter pw = response.getWriter();
+            //if someone tries to access this servlet directly
+            //without specifying username and password, in that case
+            //json_data will be null
+            if(json_data == null){
+                pw.println("<center><h2>Username and Password is required.</h2>");
+                pw.println("<h3>To Login <a href='index.html'>click here</a></h3></center>");
+                return; 
+            }
             JSONObject json_obj = (JSONObject)new JSONParser().parse(json_data);
             String username = (String)json_obj.get("username");
             String password = (String)json_obj.get("password");
