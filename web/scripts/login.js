@@ -1,92 +1,60 @@
+           console.log("login.js loaded");
+           var ajaxreq;
+           function validate(){     
+                var username = document.getElementById("username").value;
+                var password = document.getElementById("pwd").value;
+                var usertype = document.getElementById("usertype").value;
+                console.log("in validate(): "+ username +" "+password +" "+usertype);
+                if(username == "" || password == "" ){
+                   console.log("if executed");
+                   document.getElementById("loginresult").innerHTML = "<h6>Both fields are mandatory</h6><br>";
+                   return;
+                }
+               else{
+                  document.getElementById("loginresult").innerText = ""; 
+                  sendrequest(username,password,usertype);
+               }
+           }
+           
+           function sendrequest(username,password,usertype){
+               ajaxreq = new XMLHttpRequest();
+               ajaxreq.onreadystatechange = processresponse;
+               ajaxreq.open("POST","LoginControllerServlet",true);
+               ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+               credentials = {
+                   "username":username,
+                   "password":password,
+                   "usertype":usertype
+               };
+               json_data = JSON.stringify(credentials);
+               console.log(json_data);
+               ajaxreq.send("json_data="+json_data);
+           }
+           
+           function processresponse(){
+               if(ajaxreq.readyState === 4){
+                   console.log("processresponse executed");
+                   var resp = ajaxreq.responseText;
+                   if(resp.trim() === "invalid"){
+                       document.getElementById("loginresult").innerHTML = "<h6>Invalid Credentials. Try again</h6>";
+                       return;
+                   }
+                   document.getElementById("loginresult").innerHTML = "<h6>Login Successful. Redirecting to profile page.</h6>";
+//                  window.location
+//                  similar behavior as an HTTP redirect-
+                    window.location.replace("AdminControllerServlet");
 
-var ajaxReq=new XMLHttpRequest();
-var username,password,usertype;
-var url;
-$(document).ready(function()
-{
-    $("#loginbtn").click(function()
-    {
-        connect();
-    });
-});
-function validate()
-{
-    username=$("#username").val();
-    password=$("#password").val();
-    usertype=$("#usertype").val();
-    var status=true;
-    if(username==="")
-    {
-        
-        $("#username").after("<span id='error1'>Username Reqd!</span>");
-        $("#error1").css("color","red");
-        status= false;
-    }
-    if(password==="")
-    {
-        
-        $("#password").after("<span id='error2'>Password Reqd!</span>");
-        $("#error2").css("color","red");
-        status= false;
-    }
-    $("#error1").fadeOut(4000);
-    $("#error2").fadeOut(4000);
-    return status;
-}
-function connect()
-{
-    //alert("connect called");
-    if(!validate())
-    {
-       return ;
-    }
-   
-var mydata={username:username,password:password,usertype:usertype};
-var request=$.post("logincontrol",mydata,processresponse);
-request.error(handleError);
-}
-function processresponse(responseText)
-{
-    
-    
-        var resp=responseText;
-        var pagename;
-        resp=resp.trim();
-        if(resp.indexOf("jsessionid")!==-1)
-        {
-            //alert("inside success");
-            $("#loginresult").css("color","green");
-            if(usertype==="ADMIN")
-                pagename="Options";
-            else
-                pagename="Store";
-            $("#loginresult").html("Login Accepted!Redirecting to the "+pagename+" Page!");
-            url=resp;
-            setTimeout(redirectuser,3000);
-        }
-        else if(resp==="error")
-        {
-            //alert("inside error");
-            $("#loginresult").css("color","red");
-            $("#loginresult").html("Login Rejected");
-        }
-        else
-        {
-            //alert("inside else:"+resp);
-            $("#loginresult").css("color","red");
-            $("#loginresult").html("Some error occurred at the server. Try later");
-            
-        }
-    }
-    function handleError(xhr,textStatus)
-    {
-    
-    if(textStatus==='error'){
-        $("#loginresult").html("Error is "+xhr.status);
-    }
-}
+//                  similar behavior as clicking on a link
+//                  window.location.href = "http://stackoverflow.com";
+//                    
+//                  window.location.replace(...) is better than using window.location.href, 
+//                  because replace() does not keep the originating page in the session history,
+//                  meaning the user won't get stuck in a never-ending back-button fiasco.
 
-function redirectuser()
-{
-  window.location = url;  
-}
+//                  window.location=responseText;
+//                  window.location is the same as window.location.href,
+//                  in terms of behavior. window.location returns an object.
+//                  If .href is not set, window.location defaults to change the parameter .href.
+//                  Conclude: Use either one is fine.
+               }
+           }

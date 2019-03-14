@@ -59,6 +59,7 @@ public class LoginControllerServlet extends HttpServlet {
             String username = (String)json_obj.get("username");
             String password = (String)json_obj.get("password");
             String usertype = (String)json_obj.get("usertype");
+            System.out.println(username+" "+password+" "+usertype);
             UserDTO user = new UserDTO();
             user.setUsername(username);
             user.setPassword(password);

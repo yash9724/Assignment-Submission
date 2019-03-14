@@ -1,101 +1,278 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>Homepage</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
-<!--    <script type="text/javascript" src="scripts/jquery.js"></script>
-        <script type="text/javascript" src="scripts/login.js"></script>
--->
-       
-    </head>
-    <body>
-        <div class="container">
-            <h2>Login Here</h2><hr>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous">
+    <link rel='icon' href='images/logo.jpg'>
+        <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>CSE | UIT RGPV</title>
+</head>
+<body>
+    <div class="container-fluid padding">
+            <div class="row text-center text-light jumbotron bg-dark">
+                <div class="col-12">
+                    <h1 class="">UNIVERSITY INSTITUE OF TECHNOLOGY, RGPV</h1>
+                    <p  class="lead text-center" >Narshingarh Bypass Road Near Gandhi Nagar,Bhopal(M.P.)</p>
+                </div>
+            </div>
+        <nav class ="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+            <div class="container-fluid">
+                <a class = "navbar-brand"><img src="images/logo.jpg" style="width: 60px; height: 60px"><strong class="text-wrap" style="width: 6rem">Department of Computer Science & Engineering</strong></a>
+                <button class = "navbar-toggler" type = "button" data-toggle="collapse" data-target="#navbarResp">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id = "navbarResp">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link text-primary mr-2 d-inline" href="#" role="button">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-warning mr-2 d-inline dropdown-toggle" href="#" role="button" data-toggle="dropdown">About</a>
+                            <div class="dropdown-menu">
+                                <a href="Glance.html" class="dropdown-item">At A Glance</a>
+                                <a href="developers.html" class="dropdown-item">Developers</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-danger mr-2 d-inline dropdown-toggle" href="#" role="button" data-toggle="dropdown">Community</a>
+                            <div class="dropdown-menu">
+                                    <a href="http://uitrgpv.ac.in/Index.aspx" class="dropdown-item">UIT RGPV</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-info mr-2 d-inline dropdown-toggle" data-toggle="dropdown" href="#" role="button">Time Table</a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item">SEMESTER-1</a>
+                                <a href="#" class="dropdown-item">SEMESTER-2</a>
+                                <a href="#" class="dropdown-item">SEMESTER-3</a>                       
+                                <a href="#" class="dropdown-item">SEMESTER-4</a>
+                                <a href="#" class="dropdown-item">SEMESTER-5</a>
+                                <a href="#" class="dropdown-item">SEMESTER-6</a>
+                                <a href="#" class="dropdown-item">SEMESTER-7</a>
+                                <a href="#" class="dropdown-item">SEMESTER-8</a>
+
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-dark mr-2 d-inline dropdown-toggle" data-toggle="dropdown" href="#" role="button">Syllabus & Scheme</a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item">Syllabus</a>
+                                <a href="#" class="dropdown-item">Schemes</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-success d-inline text-wrap" href="Contact Us.html" role="button">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="myslideshow" class="carousel slide carousel-fade" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li class="active" data-target="#myslideshow" data-slide-to="0"></li>
+                <li data-target="#myslideshow" data-slide-to="1"></li>
+                <li data-target="#myslideshow" data-slide-to="2"></li>
+            </ol>
            
-            <span id="loginresult"></span>
-            <b>Username:</b>&nbsp;<input type="text" name="username" id="username" ><br>
-            <br>
-            <b>Password:</b>&nbsp;&nbsp;<input type="password" name="password" id="pwd" ><br>
-            <br>
-             <b>Usertype:</b>&nbsp;&nbsp; 
-            <select  name="usertype" id="usertype">
-                <option>STUDENT</option>
-                <option>FACULTY</option>
-                <option>ADMIN</option>
-            </select>
-            <br>
-            <input type="button" value="Login" name="Login" id="loginbtn" onclick="validate()" ><br>
-            <b>New User?<a href="">Register</a></b>
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="height: 40%">
+                    <img src="images/freestocks-org-570354-unsplash.jpg" class="d-block w-100" alt="">
+                    <div class="carousel-caption text-primary badge text-wrap">
+                        <h1>UIT RGPV</h1>
+                        <p>A AssignMent Base Project</p>
+                    </div> 
+                </div>
+                <div class="carousel-item">
+                    <img src="images/lukasz-szmigiel-101160-unsplash.jpg" class="d-block w-100" alt="">
+                    <div class="carousel-caption  badge text-wrap">
+                            <h1>Project to help Students</h1>
+                            <p>This  project helps Students to helps students to interact with teacher</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/neonbrand-440644-unsplash.jpg" class="d-block w-100" alt="">
+                    <div class="carousel-caption badge text-wrap">
+                            <h1>Document Uploading</h1>
+                            <p>A teacher can upload documents and a students get it</p>
+                    </div>
+                </div>
+           </div>
+           <a href="#myslideshow" class="carousel-control-prev" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a>
+           <a href="#myslideshow" class="carousel-control-next" role="button" data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a>
         </div>
+       <div class="container-fluid padding">
+           <div class="row text-center">
+               <div class="col-12">
+                   <h1 class="display-4">Welcome</h1>
+               </div>
+               <div class="lead jumbotron"><p>Welcome to our Portal.It is a Web Application which is designed for Computer Science And Engineering Department students for enhancing interaction between Students and Teacher regarding study materials or any other notice.  </p></div>
+           </div>
+       </div>
+       <div class="container-fluid text-center padding">
+           <div class="row padding">
+                <div class="col-xs-12 col-sm-6 col-md-3 offset-md-1 d-inline-block card">
+                    <img src="images/user.jpg" class="rounded float-left textbottom" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary" role="button">Go somewhere</a>
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 offset-md-1 d-inline-block card">
+                    <img src="images/user.jpg" class="rounded float-left textbottom" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"> Login</button>
+					 
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3  offset-md-1 d-inline-block card">
+                    <img src="images/user.jpg" class="rounded float-left textbottom" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary" role="button">Go somewhere</a>
+                    </div> 
+                </div>
+           </div>
+        </div>
+        <!-- <div class="container"> -->
+            <div class="row mt-3">
+                    <div class="card d-md-inline-block col-md mb-3" style="width: 18rem;">
+                            <div class="card-header bg-dark text-light">
+                                <em>Notification</em>
+                            </div>
+                            <div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <a href="#" class="text-dark">Notification 1</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="#" class="text-dark">Notification 2</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="#" class="text-dark">Notification 3</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card d-md-inline-block col-md mb-3 offset-md-1" style="width: 18rem;">
+                            <div class="card-header bg-dark text-light">
+                                <em>News</em>
+                            </div>
+                            <div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <a href="#" class="text-dark">Notification 1</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="#" class="text-dark">Notification 2</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="#" class="text-dark">Notification 3</a>
+                                  </li>
+                                </ul>
+                            </div>
+                        </div>
+            </div>
+				
+				<div class="modal fade" id="myModal">
+ <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header bg-light">
+	  <img id="homelogo" style="height:44px; " src="images/logo.jpg">
+       <div class="text-center text-info lead"> <h4 class="modal-title">&nbsp;&nbsp;Login</h4></div>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body ">
+
+ <div class="form-group">
+       
+        <label  class="text-danger"><strong>User-Type</strong></label>
+        <select class="form-control" id="usertype">
+            <option >ADMIN</option>
+            <option>FACULTY</option>
+            <option>STUDENT</option>
+	</select>          
+          
+       
+</div>          
+	   
+  <div class="form-group">
+    <label class="text-danger" for="username" ><strong>Username:</strong></label>
+    <input type="text" class="form-control" placeholder="Enter Username" id="username">
+  </div>
+  <div class="form-group">
+    <label class="text-danger" for="pwd" ><strong>Password:</strong></label>
+    <input type="password" class="form-control" placeholder="Enter Password" id="pwd">
+  </div>
+ <!-- <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"> Remember me
+    </label> -->
+  </div>
+  <div class="text-center text-success">
+      <span id="loginresult"></span>
+      <button type="button" class="btn btn-success" id="loginbtn" onclick="validate()"> Login </button>&nbsp;&nbsp;&nbsp;
+      <br> 
+      
+      <a href="#" class="text-dark ">Forget Password?</a>
+  </div>
+        <a href="#" class="text-danger text-center">&nbsp;New User? Register Here</a>
+	<br>
+	</div>
+	   
+	   
+     
+
+      <!-- Modal footer 
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+-->
+    </div>
+  </div>
+</div>
+				
+				
+        <!-- </div> -->
+        <div class="row text-center">
+            <div class="col-12">
+                <h2>Connect With Us:</h2>
+            </div>
+            <div class="col-12 text-center social padding">
+                <a href="#" class="fab fa-facebook" ></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-youtube"></a>
+                <a href="#" class="fab fa-linkedin"></a>
+
+            </div>
+        </div>
+        <footer>
+                <div class="jumbotron bg-dark text-light text-center mt-4">
+                    <h3><strong>&copy; COPY-RIGHT, UIT-RGPV</strong></h3>
+                    <hr class="dark w-50 bg-light">
+                    <p class="lead text-muted">ALL RIGHTS ARE RESERVED</p>
+                </div>
+        </footer>
+
+           
         
-        <script>
-           var ajaxreq;
-           function validate(){
-                var username = document.getElementById("username").value;
-                var password = document.getElementById("pwd").value;
-                var usertype = document.getElementById("usertype").value;
-                if(username === "" || password === "" ){
-                   console.log("if executed");
-                   document.getElementById("loginresult").innerHTML = "<h6>Both fields are mandatory</h6><br>";
-                   return;
-                }
-               else{
-                  document.getElementById("loginresult").innerText = ""; 
-                  sendrequest(username,password,usertype);
-               }
-           }
-           
-           function sendrequest(username,password,usertype){
-               ajaxreq = new XMLHttpRequest();
-               ajaxreq.onreadystatechange = processresponse;
-               ajaxreq.open("POST","LoginControllerServlet",true);
-               ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
-               credentials = {
-                   "username":username,
-                   "password":password,
-                   "usertype":usertype
-               };
-               json_data = JSON.stringify(credentials);
-               console.log(json_data);
-               ajaxreq.send("json_data="+json_data);
-           }
-           
-           function processresponse(){
-               if(ajaxreq.readyState === 4){
-                   console.log("processresponse executed");
-                   var resp = ajaxreq.responseText;
-                   if(resp.trim() === "invalid"){
-                       document.getElementById("loginresult").innerHTML = "<h3>Invalid Credentials. Try again</h3>";
-                       return;
-                   }
-                   document.getElementById("loginresult").innerHTML = "<h3>Login Successful. Redirecting to profile page.</h3>";
-//                  window.location
-//                  similar behavior as an HTTP redirect-
-                    window.location.replace("AdminControllerServlet");
-
-//                  similar behavior as clicking on a link
-//                  window.location.href = "http://stackoverflow.com";
-//                    
-//                  window.location.replace(...) is better than using window.location.href, 
-//                  because replace() does not keep the originating page in the session history,
-//                  meaning the user won't get stuck in a never-ending back-button fiasco.
-
-//                  window.location=responseText;
-//                  window.location is the same as window.location.href,
-//                  in terms of behavior. window.location returns an object.
-//                  If .href is not set, window.location defaults to change the parameter .href.
-//                  Conclude: Use either one is fine.
-               }
-           }
-        </script>
-    </body>
-    
-    
+    <!--Using card for notice-->
+    <script src="scripts/login.js" type="text/javascript"></script>
+    <script src="js/jquery3.3.1.js" type="text/javascript"></script>
+<!--    <script src="js/bootstrap.min.js" type="text/javascript"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   
+</body>
 </html>
