@@ -1,0 +1,63 @@
+.admin-login{
+    background: #e4e4e4;
+    font-family: 'Roboto' ,sans-serif;
+}
+ 
+.main-section{
+    margin: 0 auto;
+    margin-top: 130px; 
+    padding: 0px;
+}
+.modal-content{
+    background-color: #3f454b; 
+    padding: 0 18px;
+}
+
+.user-img{
+    margin-top: -50px;
+    margin-bottom: 35px;
+}
+
+.user-img img{
+    height: 100px;
+    width : 100px;
+    border-radius: 5px;
+}
+
+.form-group{
+    margin-bottom: 25px;
+}
+
+.form-group input{
+    height: 42px;
+    border-radius: 5px;
+    border: 0px;
+    font-size: 15px;
+}
+#login-btn{
+    width: 40%;
+    margin: 5px 0 25px;
+}
+.login-btn{
+    background-color: #27c2a5;
+    color: #fff;
+    font-size: 16px;
+    padding: 5px 12px;
+    border-radius: 5px;
+    
+}
+
+.login-btn:hover , .login-btn:focus{
+    background-color: #23a898;
+    
+}
+
+.forgot{
+    padding: 5px 0 25px;
+
+}
+
+.forgot a{
+    color: #c2fbfe;
+}
+ 
