@@ -13,7 +13,25 @@ public class UserDTO {
     private String username;
     private String password;
     private String usertype;
+    private String userstatus;
+    private String lastlogged;
 
+    public String getUserstatus() {
+        return userstatus;
+    }
+
+    public void setUserstatus(String userstatus) {
+        this.userstatus = userstatus;
+    }
+
+    public String getLastlogged() {
+        return lastlogged;
+    }
+
+    public void setLastlogged(String lastlogged) {
+        this.lastlogged = lastlogged;
+    }
+    
     public String getUsername() {
         return username;
     }

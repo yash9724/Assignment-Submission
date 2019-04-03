@@ -15,11 +15,11 @@
         </div>
         <div class="container-fluid" id="lg-header">
             <div class="nav navbar-right">
-                <span class="text-uppercase">Welcome, <strong id="admin"><a href="#" class="link" data-target="#adminProfile" data-toggle="modal">admin</a><strong>.</span>
-                <a href="#" class="text-uppercase link">View Site</a> /
+                <span class="text-uppercase">Welcome, <strong id="admin"><a href="#" class="link" data-target="#adminProfile" data-toggle="modal"><%= request.getAttribute("username") %></a><strong>.</span>
+                <a href="index.html" class="text-uppercase link">View Site</a> /
                 <a href="Email.html" class="text-uppercase link">Send Mail</a> /  
                 <a href="#" class="text-uppercase link"  data-target="#cngPassModal" data-toggle="modal">Change Password</a> /
-                <a href="#" class="text-uppercase link">Logout</a>
+                <a href="LoginControllerServlet?logout=logout" class="text-uppercase link">Logout</a>
             </div>
         </div>
     </nav>

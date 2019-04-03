@@ -42,18 +42,20 @@ public class AdminControllerServlet extends HttpServlet {
                 return;
             }
             
-            RequestDispatcher rd = null;
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminControllerServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>AdminControllerServlet for user: " + username + "</h1>");
-            out.println("<a href=\"FileUpload.jsp\"><h3>File Upload</h3></a>");
-            out.println("<a href='LoginControllerServlet?logout=logout'><h3>Logout</h3></a>");
-            out.println("</body>");
-            out.println("</html>");
+            RequestDispatcher rd = request.getRequestDispatcher("AdminHome.jsp");
+            request.setAttribute("username",username);
+            rd.forward(request, response);
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet AdminControllerServlet</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>AdminControllerServlet for user: " + username + "</h1>");
+//            out.println("<a href=\"FileUpload.jsp\"><h3>File Upload</h3></a>");
+//            out.println("<a href='LoginControllerServlet?logout=logout'><h3>Logout</h3></a>");
+//            out.println("</body>");
+//            out.println("</html>");
         }
     }
 
