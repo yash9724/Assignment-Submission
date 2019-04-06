@@ -15,6 +15,7 @@ public class FacultyDTO {
     private String email;
     private String address;
     private String photoPath;
+    private String username;
 
     public String getFacultyName() {
         return facultyName;
@@ -54,5 +55,13 @@ public class FacultyDTO {
 
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -9,7 +9,7 @@ package com.portal.dto;
  *
  * @author user
  */
-public class SubjectsDTO {
+public class SubjectDTO {
     private String subjectCode;
     private String subjectName;
     private String semester;

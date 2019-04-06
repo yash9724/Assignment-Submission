@@ -5,14 +5,14 @@
  */
 package com.portal.controller;
 
-import com.portal.dao.AdminDAO;
-import com.portal.dto.AdminDTO;
+
+import com.portal.dao.FacultyDAO;
+import com.portal.dto.FacultyDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author user
  */
-public class AdminControllerServlet extends HttpServlet {
+public class SaveFacultyDetailsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,9 +37,8 @@ public class AdminControllerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
+        PrintWriter pw = response.getWriter();
+        HttpSession session = request.getSession();
             String username = (String)session.getAttribute("username");
             if(username == null){
                 session.invalidate();
@@ -47,26 +46,22 @@ public class AdminControllerServlet extends HttpServlet {
                 return;
             }
             
-            RequestDispatcher rd = request.getRequestDispatcher("AdminHome.jsp");
-            AdminDTO adminDetails = AdminDAO.getAdminDetails(username);
-            session.setAttribute("photoPath",adminDetails.getPhotoPath());
-            session.setAttribute("adminName",adminDetails.getAdminName());
-            session.setAttribute("address",adminDetails.getAddress());
-            session.setAttribute("contact",adminDetails.getContactNo());
-            session.setAttribute("email",adminDetails.getEmail());
-            //request.setAttribute("adminDetails",adminDetails);
-            rd.forward(request, response);
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet AdminControllerServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>AdminControllerServlet for user: " + username + "</h1>");
-//            out.println("<a href=\"FileUpload.jsp\"><h3>File Upload</h3></a>");
-//            out.println("<a href='LoginControllerServlet?logout=logout'><h3>Logout</h3></a>");
-//            out.println("</body>");
-//            out.println("</html>");
+        FacultyDTO facultyDetails = new FacultyDTO();
+        facultyDetails.setAddress(request.getParameter("address"));
+        facultyDetails.setFacultyName(request.getParameter("facultyName"));
+        facultyDetails.setContactNo(request.getParameter("contact"));
+        facultyDetails.setEmail(request.getParameter("email"));
+        
+        System.out.println("In savefacultycontroller");
+        System.out.println(facultyDetails.getFacultyName()+' '+facultyDetails.getAddress()+' '+facultyDetails.getEmail()+' '+facultyDetails.getContactNo());
+        boolean result = FacultyDAO.saveFacultyDetails(facultyDetails);
+        System.out.println("result in savefacultycontroller: "+result);
+        if(result){
+            pw.println("saved");
+            System.out.println("Inside if");
+        }else{
+            pw.println("notsaved");
+            System.out.println("inside else");
         }
     }
 
@@ -85,7 +80,7 @@ public class AdminControllerServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AdminControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaveFacultyDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -103,7 +98,7 @@ public class AdminControllerServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AdminControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaveFacultyDetailsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

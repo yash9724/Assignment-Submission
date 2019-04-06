@@ -16,6 +16,34 @@
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>com.portal.controller.FileUploadServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SaveAdminDetailsController</servlet-name>
+        <servlet-class>com.portal.controller.SaveAdminDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeAdminPasswordServlet</servlet-name>
+        <servlet-class>com.portal.controller.ChangeAdminPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmailControllerServlet</servlet-name>
+        <servlet-class>com.portal.controller.EmailControllerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaveFacultyDetailsController</servlet-name>
+        <servlet-class>com.portal.controller.SaveFacultyDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaveStudentDetailsController</servlet-name>
+        <servlet-class>com.portal.controller.SaveStudentDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaveSubjectDetailsController</servlet-name>
+        <servlet-class>com.portal.controller.SaveSubjectDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaveStudentMarksController</servlet-name>
+        <servlet-class>com.portal.controller.SaveStudentMarksController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginControllerServlet</servlet-name>
         <url-pattern>/LoginControllerServlet</url-pattern>
@@ -31,6 +59,34 @@
     <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/FileUploadServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveAdminDetailsController</servlet-name>
+        <url-pattern>/SaveAdminDetailsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeAdminPasswordServlet</servlet-name>
+        <url-pattern>/ChangeAdminPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmailControllerServlet</servlet-name>
+        <url-pattern>/EmailControllerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveFacultyDetailsController</servlet-name>
+        <url-pattern>/SaveFacultyDetailsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveStudentDetailsController</servlet-name>
+        <url-pattern>/SaveStudentDetailsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveSubjectDetailsController</servlet-name>
+        <url-pattern>/SaveSubjectDetailsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveStudentMarksController</servlet-name>
+        <url-pattern>/SaveStudentMarksController</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

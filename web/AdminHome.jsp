@@ -15,9 +15,9 @@
         </div>
         <div class="container-fluid" id="lg-header">
             <div class="nav navbar-right">
-                <span class="text-uppercase">Welcome, <strong id="admin"><a href="#" class="link" data-target="#adminProfile" data-toggle="modal"><%= request.getAttribute("username") %></a><strong>.</span>
+                <span class="text-uppercase">Welcome, <strong id="admin"><a href="#" class="link" data-target="#adminProfile" data-toggle="modal"><%= session.getAttribute("username")%></a><strong>.</span>
                 <a href="index.html" class="text-uppercase link">View Site</a> /
-                <a href="Email.html" class="text-uppercase link">Send Mail</a> /  
+                <a href="Email.jsp" class="text-uppercase link">Send Mail</a> /  
                 <a href="#" class="text-uppercase link"  data-target="#cngPassModal" data-toggle="modal">Change Password</a> /
                 <a href="LoginControllerServlet?logout=logout" class="text-uppercase link">Logout</a>
             </div>
@@ -35,9 +35,9 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="#" class="link">View Site</a></li>
-                <li><a href="Email.html" class="link">Send Mail</a></li>
+                <li><a href="Email.jsp" class="link">Send Mail</a></li>
                 <li><a href="#" class="link" data-target="#cngPassModal" data-toggle="modal">Change Password</a></li>
-                <li><a href="#" class="link">Logout</a></li>
+                <li><a href=""LoginControllerServlet?logout=logout"" class="link">Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -92,7 +92,7 @@
                             <tr>
                                 <th>Faculty</th>
                                 <td  class="text-right">
-                                    <a href="AddFaculty.html">
+                                    <a href="AddFaculty.jsp">
                                         <span class="glyphicon glyphicon-plus h4"> Add</span>
                                     </a>
                                     &nbsp;&nbsp;
@@ -104,7 +104,7 @@
                             <tr>
                                 <th>Students</th>
                                 <td  class="text-right">
-                                    <a href="AddStudent.html">
+                                    <a href="AddStudent.jsp">
                                         <span class="glyphicon glyphicon-plus h4"> Add</span>
                                     </a>
                                     &nbsp;&nbsp;
@@ -116,7 +116,7 @@
                             <tr>
                                 <th>Marks</th>
                                 <td  class="text-right">
-                                    <a href="#">
+                                    <a href="AddMarks.jsp">
                                         <span class="glyphicon glyphicon-plus h4"> Add</span>
                                     </a>
                                     &nbsp;&nbsp;
@@ -128,7 +128,7 @@
                             <tr>
                                 <th>Subject</th>
                                 <td  class="text-right">
-                                    <a href="AddSubject.html">
+                                    <a href="AddSubject.jsp">
                                         <span class="glyphicon glyphicon-plus h4"> Add</span>
                                     </a>
                                     &nbsp;&nbsp;
@@ -223,7 +223,7 @@
         <div class="modal-dialog modal-sm" >
             <div class="modal-content">
                 <div class="modal-header">
-                    <button class="close" data-dismiss="modal">&times;</button>
+                    <button class="close" data-dismiss="modal" onclick="document.changePassForm.reset()">&times;</button>
                     <h4 class="modal-title">Change Password</h4>
                 </div>
                 <div class="modal-body">
@@ -234,7 +234,7 @@
                         </div>
                         <div class="form-group">
                             <label for="newPass">New Password</label>
-                            <input class="form-control" type="password" id="oldPass" required/>
+                            <input class="form-control" type="password" id="newPass" required/>
                         </div>
                         <div class="form-group">
                             <label for="confPass">Confirm New Password</label>
@@ -243,8 +243,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary btn-sm">Change</button>
-                    <button class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
+                    <span id="passcngresult"></span>
+                    <button class="btn btn-primary btn-sm" onclick="changeAdminPassword()">Change</button>
+                    <button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="document.changePassForm.reset()">Close</button>
                 </div>
             </div>
         </div>
@@ -269,19 +270,19 @@
                             <form action="">
                                 <div class="form-group card-text">
                                     <label for="name">Name</label>
-                                    <input class="form-control" type="text" id="name" required/>
+                                    <input class="form-control" type="text" id="name" value="<%out.println(session.getAttribute("adminName"));%>" required/>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input class="form-control" type="email" id="email" required/>
+                                    <input class="form-control" type="email" id="email" value="<%out.println(session.getAttribute("email"));%>" required/>
                                 </div>
                                 <div class="form-group">
                                     <label for="contact">Contact No</label>
-                                    <input class="form-control" type="text" id="contact" required/>
+                                    <input class="form-control" type="text" id="contact" value="<%out.println(session.getAttribute("contact"));%>" required/>
                                 </div>
                                 <div class="form-group">
                                     <label for="add">Address</label>
-                                    <input class="form-control" type="text" id="add" required/>
+                                    <input class="form-control" type="text" id="add" value="<%out.println(session.getAttribute("address"));%>"  required/>
                                 </div>
                             </form> 
                       </div>
@@ -289,14 +290,15 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary btn-sm">Save</button>
+                    <span id="saveresult"></span>
+                    <button class="btn btn-primary btn-sm" onclick="saveAdminDetails()">Save</button>
                     <button class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 <!-- End of admin profile modal-->
-   
+    <script src="scripts/AdminHome.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 

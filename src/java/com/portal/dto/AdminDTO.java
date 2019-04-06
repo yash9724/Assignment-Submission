@@ -10,6 +10,7 @@ package com.portal.dto;
  * @author user
  */
 public class AdminDTO {
+    private String username;
     private String adminName;
     private String photoPath;
     private String address;
@@ -54,5 +55,13 @@ public class AdminDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
