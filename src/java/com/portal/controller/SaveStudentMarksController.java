@@ -46,7 +46,8 @@ public class SaveStudentMarksController extends HttpServlet {
             }
             
         MarksDTO marksDetails = new MarksDTO();
-        marksDetails.setSubject(request.getParameter("subName"));
+        String operation = request.getParameter("data_id");
+        marksDetails.setSubject(request.getParameter("subject"));
         marksDetails.setRollNo(request.getParameter("rollNo"));
         marksDetails.setMidsem1(request.getParameter("midsem_1"));
         marksDetails.setMidsem2(request.getParameter("midsem_2"));
@@ -54,14 +55,21 @@ public class SaveStudentMarksController extends HttpServlet {
         marksDetails.setSemester(request.getParameter("semester"));
                 
         System.out.println("In savestudentmarkscontroller");
-        System.out.println(marksDetails.getSubject()+' '+marksDetails.getRollNo()+' '+marksDetails.getMidsem1()+' '+marksDetails.getMidsem2()+' '+marksDetails.getMidsem3()+' '+marksDetails.getSemester());
-        boolean result = MarksDAO.saveStudentMarks(marksDetails);
-        System.out.println("result in savesubjectcontroller: "+result);
+        System.out.println("data_id: "+operation+' '+marksDetails.getSubject()+' '+marksDetails.getRollNo()+' '+marksDetails.getMidsem1()+' '+marksDetails.getMidsem2()+' '+marksDetails.getMidsem3()+' '+marksDetails.getSemester());
+        boolean result = false;
+        if(operation.equals("add")){
+            result = MarksDAO.saveStudentMarks(marksDetails);
+        }else if(operation.equals("change")){
+            result = MarksDAO.editStudentMarks(marksDetails);
+        }else if(operation.equals("delete")){
+            result = MarksDAO.deleteStudentMarks(marksDetails);
+        }
+        System.out.println("result in savestudentmarkscontroller: "+result);
         if(result){
-            pw.println("saved");
+            pw.println("success");
             System.out.println("Inside if");
         }else{
-            pw.println("notsaved");
+            pw.println("failed");
             System.out.println("inside else");
         }
     }

@@ -1,3 +1,4 @@
+<%@page errorPage="errorpage.jsp" contentType="text/html"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,6 +10,14 @@
     <link href="css/custom.css" rel="stylesheet">
 </head>
 <body>
+    <%
+        String username = (String)session.getAttribute("username");
+        if(username == null){
+            session.invalidate();
+            response.sendRedirect("accessdenied.html");
+            return;
+        }
+    %>
     <nav class="navbar navbar-default hidden-xs">
         <div class="navbar-header">
             <a class="navbar-brand" href="#" id="brand">Site Administration</a>
@@ -70,11 +79,11 @@
                         <tr>
                             <th>Users</th>
                             <td  class="text-right">
-                                <a href="#">
+                                <a href="AddUser.jsp">
                                     <span class="glyphicon glyphicon-plus h4"> Add</span>
                                 </a>
                                 &nbsp;&nbsp;
-                                <a href="#">
+                                <a href="ChangeUser.jsp">
                                     <span class="glyphicon glyphicon-pencil h4"> Change</span>
                                 </a>
                             </td>
@@ -96,7 +105,7 @@
                                         <span class="glyphicon glyphicon-plus h4"> Add</span>
                                     </a>
                                     &nbsp;&nbsp;
-                                    <a href="#">
+                                    <a href="ChangeFaculty.jsp">
                                         <span class="glyphicon glyphicon-pencil h4"> Change</span>
                                     </a>
                                 </td>
@@ -108,7 +117,7 @@
                                         <span class="glyphicon glyphicon-plus h4"> Add</span>
                                     </a>
                                     &nbsp;&nbsp;
-                                    <a href="#">
+                                    <a href="ChangeStudent.jsp">
                                         <span class="glyphicon glyphicon-pencil h4"> Change</span>
                                     </a>
                                 </td>
@@ -120,7 +129,7 @@
                                         <span class="glyphicon glyphicon-plus h4"> Add</span>
                                     </a>
                                     &nbsp;&nbsp;
-                                    <a href="#">
+                                    <a href="ChangeMarks.jsp">
                                         <span class="glyphicon glyphicon-pencil h4"> Change</span>
                                     </a>
                                 </td>
@@ -132,7 +141,7 @@
                                         <span class="glyphicon glyphicon-plus h4"> Add</span>
                                     </a>
                                     &nbsp;&nbsp;
-                                    <a href="#">
+                                    <a href="ChangeSubject.jsp">
                                         <span class="glyphicon glyphicon-pencil h4"> Change</span>
                                     </a>
                                 </td>

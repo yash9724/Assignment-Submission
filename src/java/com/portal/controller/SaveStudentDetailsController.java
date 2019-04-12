@@ -45,6 +45,7 @@ public class SaveStudentDetailsController extends HttpServlet {
                 return;
             }
             
+        String operation = request.getParameter("data_id");    
         StudentDTO studentDetails = new StudentDTO();
         studentDetails.setAddress(request.getParameter("address"));
         studentDetails.setStudentName(request.getParameter("studentName"));
@@ -55,14 +56,21 @@ public class SaveStudentDetailsController extends HttpServlet {
 //        studentDetails.setPhotoPath(request.getParameter(""));
         
         System.out.println("In savestudentcontroller");
-        System.out.println(studentDetails.getStudentName()+' '+studentDetails.getAddress()+' '+studentDetails.getEmail()+' '+studentDetails.getContactNo()+' '+studentDetails.getRollNo()+' '+studentDetails.getSemester());
-        boolean result = StudentDAO.saveStudentDetails(studentDetails);
+        System.out.println("data_id: "+operation+' '+studentDetails.getStudentName()+' '+studentDetails.getAddress()+' '+studentDetails.getEmail()+' '+studentDetails.getContactNo()+' '+studentDetails.getRollNo()+' '+studentDetails.getSemester());
+        boolean result=false;
+        if(operation.equals("add")){
+            result = StudentDAO.saveStudentDetails(studentDetails);
+        }else if(operation.equals("change")){
+            result = StudentDAO.editStudentDetails(studentDetails);
+        }else if(operation.equals("delete")){
+            result = StudentDAO.deleteStudentDetails(studentDetails);
+        }
         System.out.println("result in savestudentcontroller: "+result);
         if(result){
-            pw.println("saved");
+            pw.println("success");
             System.out.println("Inside if");
         }else{
-            pw.println("notsaved");
+            pw.println("success");
             System.out.println("inside else");
         }
     }

@@ -19,6 +19,21 @@ public class StudentDTO {
     private String address;
     private String photoPath;
 
+    public StudentDTO(String studentName, String rollNo, String semester, String contactNo, String email, String address, String photoPath) {
+        this.studentName = studentName;
+        this.rollNo = rollNo;
+        this.semester = semester;
+        this.contactNo = contactNo;
+        this.email = email;
+        this.address = address;
+        this.photoPath = photoPath;
+    }
+
+    public StudentDTO() {
+    }
+    
+    
+
     public String getStudentName() {
         return studentName;
     }

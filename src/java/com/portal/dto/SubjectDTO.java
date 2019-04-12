@@ -16,6 +16,19 @@ public class SubjectDTO {
     private String faculty_A;
     private String faculty_B;
 
+    public SubjectDTO(String subjectCode, String subjectName, String semester, String faculty_A, String faculty_B) {
+        this.subjectCode = subjectCode;
+        this.subjectName = subjectName;
+        this.semester = semester;
+        this.faculty_A = faculty_A;
+        this.faculty_B = faculty_B;
+    }
+
+    public SubjectDTO() {
+    }
+    
+    
+
     public String getSubjectCode() {
         return subjectCode;
     }

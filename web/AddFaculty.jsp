@@ -1,3 +1,4 @@
+<%@page errorPage="errorpage.jsp" contentType="text/html"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -77,7 +78,7 @@
                         </div>
                         <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                        <form action="" id="faculty-form" name="facultyForm" class="addUser">
+                        <form action="" id="facultyForm" name="facultyForm" class="addUser">
                             <div class="form-group card-text">
                                 <label for="name">Name</label>
                                 <input class="form-control" type="text" id="name" required/>
@@ -102,20 +103,21 @@
                                 <label for="usrPhoto">Photo</label>
                                 <input type="file" id="usrPhoto" />
                             </div>
+                       </form>
                             <div>
                                 <span id="facultysaveresult"></span>
-                                <button class="btn btn-primary btn-sm" onclick="saveFacultyDetails()">Save</button>
+                                <button class="btn btn-primary btn-sm" data-id="add" onclick="saveFacultyDetails(event)">Save</button>
                                 <button type="reset" for="faculty-form" class="btn btn-primary btn-sm" onclick="document.facultyForm.reset()">Discard</button>
                             </div>
-                        </form>
-                            
                     </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+        
+    
+        
     <!-- Change Password Modal -->
     <div class="modal" id="cngPassModal" tabindex="-1">
         <div class="modal-dialog modal-sm" >
@@ -132,7 +134,7 @@
                         </div>
                         <div class="form-group">
                             <label for="newPass">New Password</label>
-                            <input class="form-control" type="password" id="oldPass" required/>
+                            <input class="form-control" type="password" id="newPass" required/>
                         </div>
                         <div class="form-group">
                             <label for="confPass">Confirm New Password</label>

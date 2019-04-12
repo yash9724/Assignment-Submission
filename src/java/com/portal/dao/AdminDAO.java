@@ -41,7 +41,6 @@ public class AdminDAO {
        Connection conn = null;
        PreparedStatement ps1 = null;
        PreparedStatement ps2 = null;
-       AdminDTO adminObj = null;
        int result1, result2;
        boolean success = true;
        try{

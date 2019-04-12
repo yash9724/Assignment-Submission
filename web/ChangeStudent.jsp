@@ -1,3 +1,6 @@
+<%@page import="com.portal.dao.StudentDAO"%>
+<%@page import="com.portal.dto.StudentDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page errorPage="errorpage.jsp" contentType="text/html"%>
 <!doctype html>
 <html lang="en">
@@ -9,8 +12,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link href="css/custom.css" rel="stylesheet">
 </head>
-<body onload="document.marksForm.reset()">
+<body onload="">
     <%
+        ArrayList<StudentDTO> studentList = StudentDAO.getAllStudents();
         String username = (String)session.getAttribute("username");
         if(username == null){
             session.invalidate();
@@ -63,61 +67,88 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="AdminHome.jsp">Dashboard</a></li>
-                <li class="active">Add Marks</li>
+                <li class="active">Students</li>
             </ol>
         </div>
     </section>
-
+        
+                
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
                 <div class="container-fluid">
                     <div class="jumbotron addUserJumbo">
-                        <div class="page-header">
-                            <h4>Add Marks</h4>
-                        </div>
-                        <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                        <form name="marksForm" id="marksForm" class="addUser" accept-charset="utf-8">
+                        <% if(studentList.isEmpty()){
+                            out.println("<h2>No Data Found</h2>");
+                        }
+                        else{
+                            int count=0;
+                            out.println("<div class=\"page-header\"><h2>Student List</h2></div>");
+                            out.println("<div class=\"table-responsive\"><table class=\"table table-striped\">");
+                            out.println("<thead><th>Rollno.</th><th>Student Name</th><th>Semester</th><th>Contact No.</th><th>Email</th><th>Address</th><th>Action</th></thead><tbody>");
+                            for(StudentDTO stu : studentList){
+                              String studentID = "studentID"+count; 
+                              System.out.println(studentID);
+                              out.println("<tr><td><a href=\"#\" class=link data-id=\""+count + "\"id=\""+studentID+ "\" onclick=\"fillStudentDetailsModal(event)\">"+stu.getRollNo()+"</a></td><td>"+stu.getStudentName()+"</td><td>"+stu.getSemester()+"</td><td>"+stu.getContactNo()+"</td><td>"+stu.getEmail()+"</td><td>"+stu.getAddress()+"</td><td><a href=\"#\" onclick=\"deleteStudentDetails(event)\">Delete</a></td></tr>");
+                              System.out.println(count);
+                              count++;
+                            }
+                            out.println("</tbody></table></div>");
+                        }
+                        %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <!-- Edit subject Modal -->
+    <div class="modal" id="editStudentModal" tabindex="-1">
+        <div class="modal-dialog modal-sm" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" onclick="document.studentForm.reset()">&times;</button>
+                    <h4 class="modal-title">Edit Student</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="studentForm" id="studentForm" class="addUser">
                             <div class="form-group card-text">
-                                <label for="rollNo">Roll No</label>
-                                <input class="form-control" type="text" id="rollNo" required/>
+                                <label for="rollno">RollNo</label>
+                                <input class="form-control" type="text" id="rollno" required/>
+                            </div>
+                            <div class="form-group card-text">
+                                <label for="name">Name</label>
+                                <input class="form-control" type="text" id="name" required/>
                             </div>
                             <div class="form-group card-text">
                                 <label for="sem">Semester</label>
                                 <input class="form-control" type="text" id="sem" required/>
                             </div>
-                            <div class="form-group card-text">
-                                <label for="subject">Subject Code</label>
-                                <input class="form-control" type="text" id="subjectcode" required/>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input class="form-control" type="email" id="email" required/>
                             </div>
                             <div class="form-group">
-                                <label for="mid-1">Midsem-1</label>
-                                <input class="form-control" type="text" id="mid-1" />
+                                <label for="contact">Contact No</label>
+                                <input class="form-control" type="text" id="contact" required/>
                             </div>
                             <div class="form-group">
-                                <label for="mid-2">Midsem-2</label>
-                                <input class="form-control" type="text" id="mid-2" />
+                                <label for="add">Address</label>
+                                <input class="form-control" type="text" id="add" required/>
                             </div>
-                            <div class="form-group">
-                                <label for="mid-3">Midsem-3</label>
-                                <input class="form-control" type="text" id="mid-3" />
-                            </div>
-                            
                         </form> 
                             <div>
-                                <span id="markssaveresult"></span>
-                                <button class="btn btn-primary btn-sm" data-id="add" onclick="saveStudentMarks(event)">Save</button>
-                                <button class="btn btn-primary btn-sm" onclick="document.marksForm.reset()">Discard</button>
+                                <span id="studentsaveresult"></span>
+                                <button  class="btn btn-primary btn-sm" data-id="change" onclick="saveStudentDetails(event)">Save</button>
+                                <button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="document.studentForm.reset()">Close</button>
                             </div>
-                            
-                    </div>
-                    </div>
                 </div>
+                
             </div>
         </div>
     </div>
-
+    <!-- End of edit subject modal-->
+    
     <!-- Change Password Modal -->
     <div class="modal" id="cngPassModal" tabindex="-1">
         <div class="modal-dialog modal-sm" >

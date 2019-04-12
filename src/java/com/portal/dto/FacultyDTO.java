@@ -17,6 +17,14 @@ public class FacultyDTO {
     private String photoPath;
     private String username;
 
+    public FacultyDTO(String facultyName, String contactNo, String email, String address, String photoPath) {
+        this.facultyName = facultyName;
+        this.contactNo = contactNo;
+        this.email = email;
+        this.address = address;
+        this.photoPath = photoPath;
+    }
+    public FacultyDTO(){}
     public String getFacultyName() {
         return facultyName;
     }
@@ -64,4 +72,6 @@ public class FacultyDTO {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    
 }

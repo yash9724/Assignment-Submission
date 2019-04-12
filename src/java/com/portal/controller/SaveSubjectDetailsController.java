@@ -46,6 +46,7 @@ public class SaveSubjectDetailsController extends HttpServlet {
             }
             
         SubjectDTO subjectDetails = new SubjectDTO();
+        String operation = request.getParameter("data_id");
         subjectDetails.setSubjectName(request.getParameter("subName"));
         subjectDetails.setSubjectCode(request.getParameter("subCode"));
         subjectDetails.setFaculty_A(request.getParameter("fac_a"));
@@ -53,14 +54,21 @@ public class SaveSubjectDetailsController extends HttpServlet {
         subjectDetails.setSemester(request.getParameter("semester"));
                 
         System.out.println("In savesubjectcontroller");
-        System.out.println(subjectDetails.getSubjectName()+' '+subjectDetails.getSubjectCode()+' '+subjectDetails.getFaculty_A()+' '+subjectDetails.getFaculty_B()+' '+subjectDetails.getSemester());
-        boolean result = SubjectDAO.saveSubjectDetails(subjectDetails);
+        System.out.println("data-id: "+operation+' '+subjectDetails.getSubjectName()+' '+subjectDetails.getSubjectCode()+' '+subjectDetails.getFaculty_A()+' '+subjectDetails.getFaculty_B()+' '+subjectDetails.getSemester());
+        boolean result = false;
+        if(operation.equals("add")){
+            result = SubjectDAO.saveSubjectDetails(subjectDetails);
+        }else if(operation.equals("change")){
+            result = SubjectDAO.editSubjectDetails(subjectDetails);
+        }else if(operation.equals("delete")){
+            result = SubjectDAO.deleteSubjectDetails(subjectDetails);
+        }
         System.out.println("result in savesubjectcontroller: "+result);
         if(result){
-            pw.println("saved");
+            pw.println("success");
             System.out.println("Inside if");
         }else{
-            pw.println("notsaved");
+            pw.println("failed");
             System.out.println("inside else");
         }
     }

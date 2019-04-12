@@ -46,21 +46,34 @@ public class SaveFacultyDetailsController extends HttpServlet {
                 return;
             }
             
+        String operation = request.getParameter("data_id");
         FacultyDTO facultyDetails = new FacultyDTO();
+        facultyDetails.setUsername(request.getParameter("username"));
         facultyDetails.setAddress(request.getParameter("address"));
         facultyDetails.setFacultyName(request.getParameter("facultyName"));
         facultyDetails.setContactNo(request.getParameter("contact"));
         facultyDetails.setEmail(request.getParameter("email"));
         
         System.out.println("In savefacultycontroller");
-        System.out.println(facultyDetails.getFacultyName()+' '+facultyDetails.getAddress()+' '+facultyDetails.getEmail()+' '+facultyDetails.getContactNo());
-        boolean result = FacultyDAO.saveFacultyDetails(facultyDetails);
+        System.out.println("data-id: "+operation+' '+facultyDetails.getFacultyName()+' '+facultyDetails.getAddress()+' '+facultyDetails.getEmail()+' '+facultyDetails.getContactNo());
+        
+        boolean result = false;
+        if(operation.equals("add")){
+            System.out.println("Inside if ");
+            result = FacultyDAO.saveFacultyDetails(facultyDetails);
+        }else if(operation.equals("change")){
+            System.out.println("inside first else");
+            result =  FacultyDAO.editFacultyDetails(facultyDetails);
+        }else if(operation.equals("delete")){
+            System.out.println("inside second else");
+            result =  FacultyDAO.deleteFacultyDetails(facultyDetails);
+        }
         System.out.println("result in savefacultycontroller: "+result);
         if(result){
-            pw.println("saved");
+            pw.println("success");
             System.out.println("Inside if");
         }else{
-            pw.println("notsaved");
+            pw.println("failed");
             System.out.println("inside else");
         }
     }

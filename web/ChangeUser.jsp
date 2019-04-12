@@ -1,3 +1,6 @@
+<%@page import="com.portal.dao.UserDAO"%>
+<%@page import="com.portal.dto.UserDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page errorPage="errorpage.jsp" contentType="text/html"%>
 <!doctype html>
 <html lang="en">
@@ -9,8 +12,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link href="css/custom.css" rel="stylesheet">
 </head>
-<body onload="document.marksForm.reset()">
+<body onload="">
     <%
+        ArrayList<UserDTO> userList = UserDAO.getAllUsers();
         String username = (String)session.getAttribute("username");
         if(username == null){
             session.invalidate();
@@ -63,61 +67,78 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="AdminHome.jsp">Dashboard</a></li>
-                <li class="active">Add Marks</li>
+                <li class="active">Users</li>
             </ol>
         </div>
     </section>
-
+        
+                
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
                 <div class="container-fluid">
                     <div class="jumbotron addUserJumbo">
-                        <div class="page-header">
-                            <h4>Add Marks</h4>
-                        </div>
-                        <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                        <form name="marksForm" id="marksForm" class="addUser" accept-charset="utf-8">
-                            <div class="form-group card-text">
-                                <label for="rollNo">Roll No</label>
-                                <input class="form-control" type="text" id="rollNo" required/>
-                            </div>
-                            <div class="form-group card-text">
-                                <label for="sem">Semester</label>
-                                <input class="form-control" type="text" id="sem" required/>
-                            </div>
-                            <div class="form-group card-text">
-                                <label for="subject">Subject Code</label>
-                                <input class="form-control" type="text" id="subjectcode" required/>
-                            </div>
-                            <div class="form-group">
-                                <label for="mid-1">Midsem-1</label>
-                                <input class="form-control" type="text" id="mid-1" />
-                            </div>
-                            <div class="form-group">
-                                <label for="mid-2">Midsem-2</label>
-                                <input class="form-control" type="text" id="mid-2" />
-                            </div>
-                            <div class="form-group">
-                                <label for="mid-3">Midsem-3</label>
-                                <input class="form-control" type="text" id="mid-3" />
-                            </div>
-                            
-                        </form> 
-                            <div>
-                                <span id="markssaveresult"></span>
-                                <button class="btn btn-primary btn-sm" data-id="add" onclick="saveStudentMarks(event)">Save</button>
-                                <button class="btn btn-primary btn-sm" onclick="document.marksForm.reset()">Discard</button>
-                            </div>
-                            
-                    </div>
+                        <% if(userList.isEmpty()){
+                            out.println("<h2>No Data Found</h2>");
+                        }
+                        else{
+                            int count=0;
+                            out.println("<div class=\"page-header\"><h2>User List</h2></div>");
+                            out.println("<div class=\"table-responsive\"><table class=\"table table-striped\">");
+                            out.println("<thead><th>Username</th><th>Usertype</th><th>Status</th><th>Action</th></thead><tbody>");
+                            for(UserDTO user : userList){
+                              String userID = "userID"+count; 
+                              System.out.println(userID);
+                              out.println("<tr><td><a href=\"#\" class=link data-id=\""+count + "\"id=\""+userID+ "\" onclick=\"fillUserDetailsModal(event)\">"+user.getUsername()+"</a></td><td>"+user.getUsertype()+"</td><td>"+user.getUserstatus()+"</td><td><a href=\"#\" onclick=\"deleteUserDetails(event)\">Delete</a></td></tr>");
+                              System.out.println(count);
+                              count++;
+                            }
+                            out.println("</tbody></table></div>");
+                        }
+                        %>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
 
+    <!-- Edit faculty Modal -->
+    <div class="modal" id="editUserModal" tabindex="-1">
+        <div class="modal-dialog modal-sm" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" onclick="document.usersForm.reset()">&times;</button>
+                    <h4 class="modal-title">Edit User</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" name="usersForm" id="usersForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input class="form-control" type="text" id="username" readonly/>
+                        </div>
+                        <div class="form-group">
+                            <label for="usertype">Usertype</label>
+                            <input class="form-control" type="text" id="usertype" readonly/>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" class="form-control">
+                                <option value="active">ACTIVE</option>
+                                <option value="inactive">INACTIVE</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <span id="usersaveresult"></span>
+                    <button class="btn btn-primary btn-sm" data-id="change" onclick="saveNewUser(event)">Save</button>
+                    <button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="document.usersForm.reset()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of edit faculty modal-->
+    
     <!-- Change Password Modal -->
     <div class="modal" id="cngPassModal" tabindex="-1">
         <div class="modal-dialog modal-sm" >
@@ -143,7 +164,6 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <span id="passcngresult"></span>
                     <button class="btn btn-primary btn-sm" onclick="changeAdminPassword()">Change</button>
                     <button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="document.changePassForm.reset()">Close</button>
                 </div>
@@ -189,7 +209,6 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                    <span id="saveresult"></span>
                     <button class="btn btn-primary btn-sm" onclick="saveAdminDetails()">Save</button>
                     <button class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
                 </div>

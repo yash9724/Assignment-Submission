@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link href="css/custom.css" rel="stylesheet">
 </head>
-<body onload="document.marksForm.reset()">
+<body onload="document.usersForm.reset()">
     <%
         String username = (String)session.getAttribute("username");
         if(username == null){
@@ -63,7 +63,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="AdminHome.jsp">Dashboard</a></li>
-                <li class="active">Add Marks</li>
+                <li class="active">Add Admin</li>
             </ol>
         </div>
     </section>
@@ -74,44 +74,41 @@
                 <div class="container-fluid">
                     <div class="jumbotron addUserJumbo">
                         <div class="page-header">
-                            <h4>Add Marks</h4>
+                            <h4>Add Admin</h4>
                         </div>
                         <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                        <form name="marksForm" id="marksForm" class="addUser" accept-charset="utf-8">
+                        <form name="usersForm" id="usersForm" class="addUser" accept-charset="utf-8">
                             <div class="form-group card-text">
-                                <label for="rollNo">Roll No</label>
-                                <input class="form-control" type="text" id="rollNo" required/>
-                            </div>
-                            <div class="form-group card-text">
-                                <label for="sem">Semester</label>
-                                <input class="form-control" type="text" id="sem" required/>
+                                <label for="username">Username</label>
+                                <input class="form-control" type="text" id="username"  required/>
                             </div>
                             <div class="form-group card-text">
-                                <label for="subject">Subject Code</label>
-                                <input class="form-control" type="text" id="subjectcode" required/>
+                                <label for="usertype">Usertype</label>
+                                <input class="form-control" type="text" id="usertype" value="ADMIN" readonly/>
+                            </div>
+                            <div class="form-group card-text">
+                                <label for="password">Password</label>
+                                <input class="form-control" type="password" id="password" required/>
+                            </div>
+                            <div class="form-group card-text">
+                                <label for="confPassword">Confirm Password</label>
+                                <input class="form-control" type="password" id="confPassword" required/>
                             </div>
                             <div class="form-group">
-                                <label for="mid-1">Midsem-1</label>
-                                <input class="form-control" type="text" id="mid-1" />
+                                <label for="status" >Status</label>                                    
+                                <select id="status" class="form-control">    
+                                    <option value="active">ACTIVE</option>
+                                    <option value="inactive">INACTIVE</option><span id="warning"></span>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label for="mid-2">Midsem-2</label>
-                                <input class="form-control" type="text" id="mid-2" />
-                            </div>
-                            <div class="form-group">
-                                <label for="mid-3">Midsem-3</label>
-                                <input class="form-control" type="text" id="mid-3" />
-                            </div>
-                            
                         </form> 
                             <div>
-                                <span id="markssaveresult"></span>
-                                <button class="btn btn-primary btn-sm" data-id="add" onclick="saveStudentMarks(event)">Save</button>
-                                <button class="btn btn-primary btn-sm" onclick="document.marksForm.reset()">Discard</button>
+                                <span id="usersaveresult"></span>
+                                <button class="btn btn-primary btn-sm" data-id="add" onclick="saveNewUser(event)">Save</button>
+                                <button class="btn btn-primary btn-sm" onclick="document.usersForm.reset()">Discard</button>
                             </div>
-                            
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,7 +140,6 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <span id="passcngresult"></span>
                     <button class="btn btn-primary btn-sm" onclick="changeAdminPassword()">Change</button>
                     <button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="document.changePassForm.reset()">Close</button>
                 </div>
@@ -189,7 +185,6 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                    <span id="saveresult"></span>
                     <button class="btn btn-primary btn-sm" onclick="saveAdminDetails()">Save</button>
                     <button class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
                 </div>

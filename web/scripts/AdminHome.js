@@ -40,10 +40,10 @@ function saveAdminDetailsProcessResponse(){
     if(ajaxreq.readyState === 4){
         console.log("processresponse executed");
         var resp = ajaxreq.responseText;
-        if(resp.trim() === "notsaved"){
-            document.getElementById("saveresult").innerHTML = "<h5><font color=\"red\">Error in saving changes. Try again later.</font></h5>";
-        }else{
+        if(resp.trim() === "saved"){
             document.getElementById("saveresult").innerHTML = "<h5><font color=\"green\">Changes Saved Successfully.</font></h5>";
+        }else{
+            document.getElementById("saveresult").innerHTML = "<h5><font color=\"red\">Error in saving changes. Try again later.</font></h5>";
         }
         setTimeout(function(){
             console.log("Inside settimeout");
@@ -160,27 +160,81 @@ function stripHtml(html){
     return temporalDivElement.textContent || temporalDivElement.innerText || "";
 }
 
-//-------------------------------------------Save faculty details---------------------------------------------------------
+//-------------------------------------------Save and Delete faculty details---------------------------------------------------------
 
-function saveFacultyDetails(){
-    var facultyName = document.getElementById("name").value;
-    var email = document.getElementById("email").value;
-    var address = document.getElementById("add").value;
-    var contact = document.getElementById("contact").value;
+function deleteFacultyDetails(event){
+    console.log("inside deleteFacultyDetails");
+    console.log(event.target.parentElement.parentElement);
+    var col = event.target.parentElement;
+    var row = col.parentElement;
+    var facultyDetails = row.children;
+    var email = facultyDetails[1].innerText;
+    
+   
+    console.log("Details of record to be deleted: "+email);
+    ajaxreq = new XMLHttpRequest();
+    ajaxreq.onreadystatechange = function(){
+        console.log("processresponse executed");
+        if(ajaxreq.readyState === 4){
+            if (ajaxreq.status===200 || window.location.href.indexOf("http")===-1){
+                var resp = ajaxreq.responseText;
+                if(resp.trim() === "success"){
+                    console.log("inside if");
+                    var row = event.target.parentElement.parentElement;
+                    row.parentNode.removeChild(row);
+                }else{
+                    console.log("inside else");
+                    col.innerHTML = "<h6><font color=\"red\">Error in Deleting.</font></h6>";
+                    setTimeout(function(){
+                    console.log("Inside settimeout");
+                    var node = document.createElement("a");                                    
+                    var textnode = document.createTextNode("Delete");         
+                    node.appendChild(textnode);  
+                    col.replaceChild(node,col.lastChild);
+                    col.lastChild.setAttribute("href","# ");
+                },5000);
+                }
+            }else{
+                alert("An error has occured making the request");
+            }    
+        }
+    };
+    ajaxreq.open("POST","SaveFacultyDetailsController",true);
+    ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+    ajaxreq.send("data_id=delete"+"&email="+email);
+    console.log("After request for deleting faculty details has been sent");
+}
+
+function saveFacultyDetails(event){
+    var data_id = event.target.getAttribute("data-id");
+    var facultyForm = document.getElementById("facultyForm");
+    var facultyName = facultyForm.querySelector("#name").value;
+    var email = facultyForm.querySelector("#email").value;
+    var address = facultyForm.querySelector("#add").value;
+    var contact = facultyForm.querySelector("#contact").value;
     //var photoPath = document.getElementById("usrPhoto").value;
+    var username;
+    if(data_id === "edit"){
+        username = facultyForm.querySelector("#username").value;
+        if(username === null){
+            username = ' ';
+        }
+    }else{
+        username = ' ';
+    }
     
     if(facultyName === '' || email === '' || address === '' || 
        contact === ''){
             return;
     }
     
-    console.log("New faculty Details: "+facultyName+' '+email+' '+address+' '+contact);
+    console.log("New faculty Details: "+username+' '+facultyName+' '+email+' '+address+' '+contact);
     ajaxreq = new XMLHttpRequest();
     ajaxreq.onreadystatechange = saveFacultyDetailsProcessResponse;
     ajaxreq.open("POST","SaveFacultyDetailsController",true);
     ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
-    ajaxreq.send("facultyName="+facultyName+"&email="+email+"&address="+address+"&contact="+contact);
-    console.log("After request for saving faculty details has been sent");
+    ajaxreq.send("data_id="+data_id+"&username="+username+"&facultyName="+facultyName+"&email="+email+"&address="+address+"&contact="+contact);
+    console.log("After request for saving/editing faculty details has been sent");
 
 }
 
@@ -188,10 +242,10 @@ function saveFacultyDetailsProcessResponse(){
     if(ajaxreq.readyState === 4){
         console.log("processresponse executed");
         var resp = ajaxreq.responseText;
-        if(resp.trim() === "notsaved"){
-            document.getElementById("facultysaveresult").innerHTML = "<h5><font color=\"red\">Error in saving faculty details. Try again later.</font></h5>";
-        }else{
+        if(resp.trim() === "success"){
             document.getElementById("facultysaveresult").innerHTML = "<h5><font color=\"green\">Details Saved Successfully.</font></h5>";
+        }else{
+            document.getElementById("facultysaveresult").innerHTML = "<h5><font color=\"red\">Error in saving faculty details. Try again later.</font></h5>";
         }
         setTimeout(function(){
             console.log("Inside settimeout");
@@ -201,14 +255,59 @@ function saveFacultyDetailsProcessResponse(){
 }
 
 
-//---------------------------------------Save Student Details----------------------------------------------------------------
-function saveStudentDetails(){
-    var studentName = document.getElementById("name").value;
-    var rollNo = document.getElementById("rollno").value;
-    var email = document.getElementById("email").value;
-    var address = document.getElementById("add").value;
-    var contact = document.getElementById("contact").value;
-    var semester = document.getElementById("sem").value;
+//---------------------------------------Save and delete Student Details----------------------------------------------------------------
+function deleteStudentDetails(event){
+    console.log("inside deleteStudentDetails");
+    console.log(event.target.parentElement.parentElement);
+    var col = event.target.parentElement;
+    var row = col.parentElement;
+    var studentDetails = row.children;
+    var rollNo = studentDetails[0].innerText;
+    
+   
+    console.log("Details of record to be deleted: "+email);
+    ajaxreq = new XMLHttpRequest();
+    ajaxreq.onreadystatechange = function(){
+        console.log("processresponse executed");
+        if(ajaxreq.readyState === 4){
+            if (ajaxreq.status===200 || window.location.href.indexOf("http")===-1){
+                var resp = ajaxreq.responseText;
+                if(resp.trim() === "success"){
+                    console.log("inside if");
+                    var row = event.target.parentElement.parentElement;
+                    row.parentNode.removeChild(row);
+                }else{
+                    console.log("inside else");
+                    col.innerHTML = "<h6><font color=\"red\">Error in Deleting.</font></h6>";
+                    setTimeout(function(){
+                    console.log("Inside settimeout");
+                    var node = document.createElement("a");                                    
+                    var textnode = document.createTextNode("Delete");         
+                    node.appendChild(textnode);  
+                    col.replaceChild(node,col.lastChild);
+                    col.lastChild.setAttribute("href","# ");
+                },5000);
+                }
+            }else{
+                alert("An error has occured making the request");
+            }    
+        }
+    };
+    ajaxreq.open("POST","SaveStudentDetailsController",true);
+    ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+    ajaxreq.send("data_id=delete"+"&rollNo="+rollNo);
+    console.log("After request for deleting student details has been sent");
+}
+
+function saveStudentDetails(event){
+    var data_id = event.target.getAttribute("data-id ");
+    var marksForm = document.getElementById("marksForm");
+    var studentName = marksForm.querySelector("#name").value;
+    var rollNo = marksForm.querySelector("#rollno").value;
+    var email = marksForm.querySelector("#email").value;
+    var address = marksForm.querySelector("#add").value;
+    var contact = marksForm.querySelector("#contact").value;
+    var semester = marksForm.querySelector("#sem").value;
     //var photoPath = document.getElementById("usrPhoto").value;
     
     if(studentName === '' || rollNo === '' || email === '' ||
@@ -221,7 +320,7 @@ function saveStudentDetails(){
     ajaxreq.onreadystatechange = saveStudentDetailsProcessResponse;
     ajaxreq.open("POST","SaveStudentDetailsController",true);
     ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
-    ajaxreq.send("studentName="+studentName+"&email="+email+"&address="+address+"&contact="+contact+"&semester="+semester+"&rollNo="+rollNo);
+    ajaxreq.send("data_id="+data_id+"&studentName="+studentName+"&email="+email+"&address="+address+"&contact="+contact+"&semester="+semester+"&rollNo="+rollNo);
     console.log("After request for saving student details has been sent");
 
 }
@@ -230,10 +329,10 @@ function saveStudentDetailsProcessResponse(){
     if(ajaxreq.readyState === 4){
         console.log("processresponse executed");
         var resp = ajaxreq.responseText;
-        if(resp.trim() === "notsaved"){
-            document.getElementById("studentsaveresult").innerHTML = "<h5><font color=\"red\">Error in saving student details. Try again later.</font></h5>";
-        }else{
+        if(resp.trim() === "success"){
             document.getElementById("studentsaveresult").innerHTML = "<h5><font color=\"green\">Details Saved Successfully.</font></h5>";
+        }else{
+            document.getElementById("studentsaveresult").innerHTML = "<h5><font color=\"red\">Error in saving student details. Try again later.</font></h5>";
         }
         setTimeout(function(){
             console.log("Inside settimeout");
@@ -242,14 +341,60 @@ function saveStudentDetailsProcessResponse(){
     }
 }    
 
-//-------------------------------------------Save Subject Details---------------------------------------------------------
+//-------------------------------------------Save and delete Subject Details---------------------------------------------------------
 
-function saveSubjectDetails(){
-    var subName = document.getElementById("subName").value;
-    var subCode = document.getElementById("subCode").value;
-    var semester = document.getElementById("sem").value;
-    var fac_a = document.getElementById("fac-a").value;
-    var fac_b = document.getElementById("fac-b").value;
+function deleteSubjectDetails(event){
+    console.log("inside deleteSubjectDetails");
+    console.log(event.target.parentElement.parentElement);
+    var col = event.target.parentElement;
+    var row = col.parentElement;
+    var subjectDetails = row.children;
+    var subCode = subjectDetails[0].innerText;
+    
+   
+    console.log("Details of record to be deleted: "+subCode);
+    ajaxreq = new XMLHttpRequest();
+    ajaxreq.onreadystatechange = function(){
+        console.log("processresponse executed");
+        if(ajaxreq.readyState === 4){
+            if (ajaxreq.status===200 || window.location.href.indexOf("http")===-1){
+                var resp = ajaxreq.responseText;
+                if(resp.trim() === "success"){
+                    console.log("inside if");
+                    var row = event.target.parentElement.parentElement;
+                    row.parentNode.removeChild(row);
+                }else{
+                    console.log("inside else");
+                    col.innerHTML = "<h6><font color=\"red\">Error in Deleting.</font></h6>";
+                    setTimeout(function(){
+                    console.log("Inside settimeout");
+                    var node = document.createElement("a");                                    
+                    var textnode = document.createTextNode("Delete");         
+                    node.appendChild(textnode);  
+                    col.replaceChild(node,col.lastChild);
+                    col.lastChild.setAttribute("href","# ");
+                },5000);
+                }
+            }else{
+                alert("An error has occured making the request");
+            }    
+        }
+    };
+    ajaxreq.open("POST","SaveSubjectDetailsController",true);
+    ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+    ajaxreq.send("data_id=delete"+"&subCode="+subCode);
+    console.log("After request for deleting subject details has been sent");
+}
+
+function saveSubjectDetails(event){
+    var data_id = event.target.getAttribute("data-id");
+    var subjectForm = document.getElementById("subjectForm");
+    var subName = subjectForm.querySelector("#subName").value;
+    var subCode = subjectForm.querySelector("#subCode").value;
+    var semester = subjectForm.querySelector("#sem").value;
+    var fac_a = subjectForm.querySelector("#fac-a").value;
+    var fac_b = subjectForm.querySelector("#fac-b").value;
+    
     
     if(subName === '' || subCode === '' || semester === '' || 
        fac_a === '' || fac_b === ''){
@@ -261,7 +406,7 @@ function saveSubjectDetails(){
     ajaxreq.onreadystatechange = saveSubjectDetailsProcessResponse;
     ajaxreq.open("POST","SaveSubjectDetailsController",true);
     ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
-    ajaxreq.send("subName="+subName+"&fac_a="+fac_a+"&fac_b="+fac_b+"&semester="+semester+"&subCode="+subCode);
+    ajaxreq.send("data_id="+data_id+"&subName="+subName+"&fac_a="+fac_a+"&fac_b="+fac_b+"&semester="+semester+"&subCode="+subCode);
     console.log("After request for saving subject details has been sent");
 
 }
@@ -270,10 +415,10 @@ function saveSubjectDetailsProcessResponse(){
     if(ajaxreq.readyState === 4){
         console.log("processresponse executed");
         var resp = ajaxreq.responseText;
-        if(resp.trim() === "notsaved"){
-            document.getElementById("subjectsaveresult").innerHTML = "<h5><font color=\"red\">Error in saving subject details. Try again later.</font></h5>";
-        }else{
+        if(resp.trim() === "success"){
             document.getElementById("subjectsaveresult").innerHTML = "<h5><font color=\"green\">Details Saved Successfully.</font></h5>";
+        }else{
+            document.getElementById("subjectsaveresult").innerHTML = "<h5><font color=\"red\">Error in saving subject details. Try again later.</font></h5>";
         }
         setTimeout(function(){
             console.log("Inside settimeout");
@@ -282,18 +427,64 @@ function saveSubjectDetailsProcessResponse(){
     }
 }
 
-//--------------------------------------------Save marks-----------------------------------------------------------------
+//--------------------------------------------Save and delete marks-----------------------------------------------------------------
 
-function saveStudentMarks(){
-    var rollNo = document.getElementById("rollNo").value;
-    var subject = document.getElementById("subject").value;
-    var semester = document.getElementById("sem").value;
-    var midsem_1 = document.getElementById("mid-1").value;
-    var midsem_2 = document.getElementById("mid-2").value;
-    var midsem_3 = document.getElementById("mid-3").value;
+function deleteStudentMarks(event){
+    console.log("inside deleteStudentMarks");
+    console.log(event.target.parentElement.parentElement);
+    var col = event.target.parentElement;
+    var row = col.parentElement;
+    var marksDetails = row.children;
+    var rollNo = marksDetails[0].innerText;
+    var semester = marksDetails[1].innerText;
+    var subject = marksDetails[2].innerText;
     
-    if(subject === '' || rollNo === '' || semester === '' || 
-       midsem_1 === '' || midsem_2 === '' || midsem_3 === ''){
+   
+    console.log("Details of record to be deleted: "+rollNo+' '+subject+' '+semester);
+    ajaxreq = new XMLHttpRequest();
+    ajaxreq.onreadystatechange = function(){
+        console.log("processresponse executed");
+        if(ajaxreq.readyState === 4){
+            if (ajaxreq.status===200 || window.location.href.indexOf("http")===-1){
+                var resp = ajaxreq.responseText;
+                if(resp.trim() === "success"){
+                    console.log("inside if");
+                    var row = event.target.parentElement.parentElement;
+                    row.parentNode.removeChild(row);
+                }else{
+                    console.log("inside else");
+                    col.innerHTML = "<h6><font color=\"red\">Error in Deleting.</font></h6>";
+                    setTimeout(function(){
+                    console.log("Inside settimeout");
+                    var node = document.createElement("a");                                    
+                    var textnode = document.createTextNode("Delete");         
+                    node.appendChild(textnode);  
+                    col.replaceChild(node,col.lastChild);
+                    col.lastChild.setAttribute("href","# ");
+                },5000);
+                }
+            }else{
+                alert("An error has occured making the request");
+            }    
+        }
+    };
+    ajaxreq.open("POST","SaveStudentMarksController",true);
+    ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+    ajaxreq.send("data_id=delete"+"&rollNo="+rollNo+"&subject="+subject+"&semester="+semester);
+    console.log("After request for deleting student marks details has been sent");
+}
+
+function saveStudentMarks(event){
+    var data_id = event.target.getAttribute("data-id");
+    var marksForm = document.getElementById("marksForm");
+    var rollNo = marksForm.querySelector("#rollNo").value;
+    var subject = marksForm.querySelector("#subjectcode").value;
+    var semester = marksForm.querySelector("#sem").value;
+    var midsem_1 = marksForm.querySelector("#mid-1").value;
+    var midsem_2 = marksForm.querySelector("#mid-2").value;
+    var midsem_3 = marksForm.querySelector("#mid-3").value;
+    
+    if(subject === '' || rollNo === '' || semester === ''){
             return;
     }
     
@@ -302,7 +493,7 @@ function saveStudentMarks(){
     ajaxreq.onreadystatechange = saveStudentMarksProcessResponse;
     ajaxreq.open("POST","SaveStudentMarksController",true);
     ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
-    ajaxreq.send("subName="+subject+"&rollNo="+rollNo+"&midsem_1="+midsem_1+"&semester="+semester+"&midsem_2="+midsem_2+"&midsem_3="+midsem_3);
+    ajaxreq.send("data_id="+data_id+"&subject="+subject+"&rollNo="+rollNo+"&midsem_1="+midsem_1+"&semester="+semester+"&midsem_2="+midsem_2+"&midsem_3="+midsem_3);
     console.log("After request for saving student marks has been sent");
 
 }
@@ -311,10 +502,10 @@ function saveStudentMarksProcessResponse(){
     if(ajaxreq.readyState === 4){
         console.log("processresponse executed");
         var resp = ajaxreq.responseText;
-        if(resp.trim() === "notsaved"){
-            document.getElementById("markssaveresult").innerHTML = "<h5><font color=\"red\">Error in saving marks details. Try again later.</font></h5>";
-        }else{
+        if(resp.trim() === "success"){
             document.getElementById("markssaveresult").innerHTML = "<h5><font color=\"green\">Details Saved Successfully.</font></h5>";
+        }else{
+            document.getElementById("markssaveresult").innerHTML = "<h5><font color=\"red\">Error in saving marks details. Try again later.</font></h5>";
         }
         setTimeout(function(){
             console.log("Inside settimeout");
@@ -323,4 +514,202 @@ function saveStudentMarksProcessResponse(){
     }
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+//function showWarning(){
+//    console.log("Inside ShowWarning()");
+//    document.getElementById("warning").innerHTML = "<h6>* a user with inactive status cannot login</h6>";
+//    return;
+//}
+
+//----------------------------------------------------Save and Delete User Credentials--------------------------------------------------------------------
+
+function deleteUserDetails(event){
+    console.log("inside deleteUserDetails");
+    console.log(event.target.parentElement.parentElement);
+    var col = event.target.parentElement;
+    var row = col.parentElement;
+    var userDetails = row.children;
+    var username = userDetails[0].innerText;
+    
+   
+    console.log("Details of record to be deleted: "+username);
+    ajaxreq = new XMLHttpRequest();
+    ajaxreq.onreadystatechange = function(){
+        console.log("processresponse executed");
+        if(ajaxreq.readyState === 4){
+            if (ajaxreq.status===200 || window.location.href.indexOf("http")===-1){
+                var resp = ajaxreq.responseText;
+                if(resp.trim() === "success"){
+                    console.log("inside if");
+                    var row = event.target.parentElement.parentElement;
+                    row.parentNode.removeChild(row);
+                }else{
+                    console.log("inside else");
+                    col.innerHTML = "<h6><font color=\"red\">Error in Deleting.</font></h6>";
+                    setTimeout(function(){
+                    console.log("Inside settimeout");
+                    var node = document.createElement("a");                                    
+                    var textnode = document.createTextNode("Delete");         
+                    node.appendChild(textnode);  
+                    col.replaceChild(node,col.lastChild);
+                    col.lastChild.setAttribute("href","# ");
+                },5000);
+                }
+            }else{
+                alert("An error has occured making the request");
+            }    
+        }
+    };
+    ajaxreq.open("POST","SaveNewUserController",true);
+    ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+    user_credentials={
+        "data_id":"delete",
+        "username":username
+        
+    };
+    json_data = JSON.stringify(user_credentials);
+    ajaxreq.send("json_data="+json_data);
+    console.log("After request for deleting user details has been sent");
+}
+
+function saveNewUser(event){
+    var data_id = event.target.getAttribute("data-id");
+    var usersForm = document.getElementById("usersForm");
+    var username = usersForm.querySelector("#username").value;
+    var usertype = usersForm.querySelector("#usertype").value;
+    var status = usersForm.querySelector("#status").value;
+    var password;
+    var confPassword;
+    if(data_id === "add"){
+        password = usersForm.querySelector("#password").value;
+        confPassword = usersForm.querySelector("#confPassword").value;
+    }
+    
+    
+    if(username === '' || password === '' || confPassword === ''){
+        return;
+    }
+    
+    if(data_id === "add" && confPassword !== password){
+        document.getElementById("usersaveresult").innerHTML = "<h5><font color=\"red\">Both Password and Confirm Password needs to be same.</font></h5>";
+    }
+    
+    console.log("New user Details: "+username+' '+usertype+' '+password+' '+confPassword+' '+status);
+    ajaxreq = new XMLHttpRequest();
+    ajaxreq.onreadystatechange = saveNewUserProcessResponse;
+    ajaxreq.open("POST","SaveNewUserController",true);
+    ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+    user_credentials={
+        "data_id":data_id,
+        "username":username,
+        "password":password,
+        "usertype":usertype,
+        "status":status
+    };
+    json_data = JSON.stringify(user_credentials);
+    ajaxreq.send("json_data="+json_data);
+    console.log("After request for saving new user has been sent");
+
+}
+
+function saveNewUserProcessResponse(){
+    if(ajaxreq.readyState === 4){
+        console.log("processresponse executed");
+        var resp = ajaxreq.responseText;
+        if(resp.trim() === "success"){
+            document.getElementById("usersaveresult").innerHTML = "<h5><font color=\"green\">User Details Saved Successfully.</font></h5>";
+        }else{
+            document.getElementById("usersaveresult").innerHTML = "<h5><font color=\"red\">Error in saving user login details. Try again later.</font></h5>";
+        }
+        setTimeout(function(){
+            console.log("Inside settimeout");
+            document.getElementById("usersaveresult").innerHTML = "";
+        },5000);
+    }
+}
+
+//-------------------------------------------------------fillFacultyDetailsModal()------------------------------------------------------
+function fillFacultyDetailsModal(event){
+    console.log("inside facultydetailsmodal function");
+    console.log(event.target.id);
+    console.log(document.getElementById(event.target.id).parentElement.parentElement.children);
+    var par = document.getElementById(event.target.id).parentElement.parentElement.children;
+    var editForm = document.getElementById("facultyForm");
+    editForm.querySelector("#username").value = par[0].innerText;
+    editForm.querySelector("#email").value = par[1].innerText;
+    editForm.querySelector("#name").value = par[2].innerText;
+    editForm.querySelector("#contact").value = par[3].innerText;
+    editForm.querySelector("#add").value = par[4].innerText;
+    
+    $("#editFacultyModal").modal();
+} 
+
+//--------------------------------------fillUserDetailsModal()-------------------------------------------------------
+
+function fillUserDetailsModal(event){
+    console.log("inside filluserdetailsmodal function");
+    console.log(event.target.id);
+    console.log(document.getElementById(event.target.id).parentElement.parentElement.children);
+    var par = document.getElementById(event.target.id).parentElement.parentElement.children;
+    var userForm = document.getElementById("usersForm");
+    userForm.querySelector("#username").value = par[0].innerText;
+    userForm.querySelector("#usertype").value = par[1].innerText;
+    userForm.querySelector("#status").selectedIndex = par[2].value;
+    
+    $("#editUserModal").modal();
+} 
+
+//--------------------------------------------------fillSubjectDetailsModal---------------------------------------------
+
+function fillSubjectDetailsModal(event){
+    console.log("inside fillsubjectdetailmodal function");
+    console.log(event.target.id);
+    console.log(document.getElementById(event.target.id).parentElement.parentElement.children);
+    var par = document.getElementById(event.target.id).parentElement.parentElement.children;
+    var subjectForm = document.getElementById("subjectForm");
+    subjectForm.querySelector("#subCode").value = par[0].innerText;
+    subjectForm.querySelector("#subName").value = par[1].innerText;
+    subjectForm.querySelector("#sem").value = par[2].innerText;
+    subjectForm.querySelector("#fac-a").value = par[3].innerText;
+    subjectForm.querySelector("#fac-b").value = par[4].innerText;
+    
+    $("#editSubjectModal").modal();
+}
+
+//--------------------------------fillStudentDetailsModal--------------------------------------------
+
+function fillStudentDetailsModal(event){
+    console.log("inside fillstudentdetailmodal function");
+    console.log(event.target.id);
+    console.log(document.getElementById(event.target.id).parentElement.parentElement.children);
+    var par = document.getElementById(event.target.id).parentElement.parentElement.children;
+    var marksForm = document.getElementById("marksForm");
+    marksForm.querySelector("#rollno").value = par[0].innerText;
+    marksForm.querySelector("#name").value = par[1].innerText;
+    marksForm.querySelector("#sem").value = par[2].innerText;
+    marksForm.querySelector("#contact").value = par[3].innerText;
+    marksForm.querySelector("#email").value = par[4].innerText;
+    marksForm.querySelector("#add").value = par[5].innerText;
+    
+    $("#editStudentModal").modal();
+}
+
+//----------------------------------------------------------fillMarksDetailsModal------------------------------------------------------
+
+
+function fillMarksDetailsModal(event){
+    console.log("inside fillmarksdetailmodal function");
+    console.log(event.target.id);
+    console.log(document.getElementById(event.target.id).parentElement.parentElement.children);
+    var par = document.getElementById(event.target.id).parentElement.parentElement.children;
+    var marksForm = document.getElementById("marksForm");
+    marksForm.querySelector("#rollNo").value = par[0].innerText;
+    marksForm.querySelector("#sem").value = par[1].innerText;
+    marksForm.querySelector("#subjectcode").value = par[2].innerText;
+    marksForm.querySelector("#mid-1").value = par[3].innerText;
+    marksForm.querySelector("#mid-2").value = par[4].innerText;
+    marksForm.querySelector("#mid-3").value = par[5].innerText;
+    
+    $("#editMarksModal").modal();
+}

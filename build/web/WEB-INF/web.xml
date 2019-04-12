@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    
+     <session-config>
+        <session-timeout>-1</session-timeout>
+    </session-config>
     <servlet>
         <servlet-name>LoginControllerServlet</servlet-name>
         <servlet-class>com.portal.controller.LoginControllerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminlogin</servlet-name>
+        <jsp-file>/AdminLogin.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>AdminControllerServlet</servlet-name>
@@ -44,9 +52,17 @@
         <servlet-name>SaveStudentMarksController</servlet-name>
         <servlet-class>com.portal.controller.SaveStudentMarksController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SaveNewUserController</servlet-name>
+        <servlet-class>com.portal.controller.SaveNewUserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginControllerServlet</servlet-name>
         <url-pattern>/LoginControllerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminlogin</servlet-name>
+        <url-pattern>/admin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminControllerServlet</servlet-name>
@@ -87,6 +103,10 @@
     <servlet-mapping>
         <servlet-name>SaveStudentMarksController</servlet-name>
         <url-pattern>/SaveStudentMarksController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveNewUserController</servlet-name>
+        <url-pattern>/SaveNewUserController</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

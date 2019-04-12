@@ -17,6 +17,20 @@ public class MarksDTO {
     private String midsem2;
     private String midsem3;
 
+    public MarksDTO(String rollNo, String semester, String subject, String midsem1, String midsem2, String midsem3) {
+        this.rollNo = rollNo;
+        this.semester = semester;
+        this.subject = subject;
+        this.midsem1 = midsem1;
+        this.midsem2 = midsem2;
+        this.midsem3 = midsem3;
+    }
+
+    public MarksDTO() {
+    }
+    
+    
+
     public String getRollNo() {
         return rollNo;
     }
