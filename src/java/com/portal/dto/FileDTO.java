@@ -16,6 +16,20 @@ public class FileDTO {
     private String description;
     private String timeStamp;
     private String filePath;
+    private String fileType;
+    private String semester;
+
+    public FileDTO(String fileId, String fileName, String description, String timeStamp, String fileType,String semester) {
+        this.fileId = fileId;
+        this.fileName = fileName;
+        this.description = description;
+        this.timeStamp = timeStamp;
+        this.fileType = fileType;
+        this.semester = semester;
+    }
+    
+    public FileDTO() {
+    }
 
     public String getFileId() {
         return fileId;
@@ -63,6 +77,21 @@ public class FileDTO {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
-     
-}
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
 }

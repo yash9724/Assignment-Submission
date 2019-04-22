@@ -1,6 +1,7 @@
+<%@page import="com.portal.dao.FileDAO"%>
+<%@page import="com.portal.dto.FileDTO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.portal.dao.FacultyDAO"%>
-<%@page import="com.portal.dto.FacultyDTO"%>
+
 <%@page errorPage="errorpage.jsp" contentType="text/html"%>
 <!doctype html>
 <html lang="en">
@@ -8,14 +9,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Site Administration | Dashboard</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link href="css/custom.css" rel="stylesheet">
 </head>
 <body onload="">
     <%
-        ArrayList<FacultyDTO> facultyList = FacultyDAO.getAllFaculties();
+        ArrayList<FileDTO> fileList = FileDAO.getAllFiles();
         String username = (String)session.getAttribute("username");
         if(username == null){
             session.invalidate();
@@ -68,7 +68,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="AdminHome.jsp">Dashboard</a></li>
-                <li class="active">Faculty</li>
+                <li class="active">Files</li>
             </ol>
         </div>
     </section>
@@ -79,18 +79,18 @@
             <div class="col-xs-12">
                 <div class="container-fluid">
                     <div class="jumbotron addUserJumbo">
-                        <% if(facultyList.isEmpty()){
+                        <% if(fileList.isEmpty()){
                             out.println("<h2>No Data Found</h2>");
                         }
                         else{
                             int count=0;
-                            out.println("<div class=\"page-header\"><h2>Faculty List&nbsp;&nbsp;<small>Click on Username/Email to Edit Details</small></h2></div>");
+                            out.println("<div class=\"page-header\"><h2>File List&nbsp;&nbsp;<small>Click on FileID to Edit Details</small></h2></div>");
                             out.println("<div class=\"table-responsive\"><table class=\"table table-striped\">");
-                            out.println("<thead><th>Username</th><th>Email</th><th>Name</th><th>Contact No.</th><th>Address</th><th>Action</th></thead><tbody>");
-                            for(FacultyDTO fac : facultyList){
-                              String facultyID = "facultyID"+count; 
-                              System.out.println(facultyID);
-                              out.println("<tr><td><a href=\"#\" class=link data-id=\""+count + "\"id=\""+facultyID+ "\" onclick=\"fillFacultyDetailsModal(event)\">"+fac.getUsername()+"</a></td><td>"+fac.getEmail()+"</td><td>"+fac.getFacultyName()+"</td><td>"+fac.getContactNo()+"</td><td>"+fac.getAddress()+"</td><td><a href=\"#\" onclick=\"deleteFacultyDetails(event)\">Delete</a></td></tr>");
+                            out.println("<thead><th>FileID</th><th>Filename</th><th>Description</th><th>File Type</th><th>Subject</th><th>Semester</th><th>Action</th></thead><tbody>");
+                            for(FileDTO file : fileList){
+                              String fileID = "fileID"+count; 
+                              System.out.println(fileID);
+                              out.println("<tr><td><a href=\"#\" class=link data-id=\""+count + "\"id=\""+fileID+ "\" onclick=\"fillFileDetailsModal(event)\">"+file.getFileId()+"</a></td><td>"+file.getFileName()+"</td><td>"+file.getDescription()+"</td><td>"+file.getFileType()+"</td><td>"+file.getSubject()+"</td><td>"+file.getSemester()+"</td><td><a href=\"#\" onclick=\"deleteFileDetails(event)\">Delete</a></td></tr>");
                               System.out.println(count);
                               count++;
                             }
@@ -104,41 +104,45 @@
     </div>    
 
     <!-- Edit faculty Modal -->
-    <div class="modal" id="editFacultyModal" tabindex="-1">
+    <div class="modal" id="editFilesModal" tabindex="-1">
         <div class="modal-dialog modal-sm" >
             <div class="modal-content">
                 <div class="modal-header">
-                    <button class="close" data-dismiss="modal" onclick="document.facultyForm.reset()">&times;</button>
+                    <button class="close" data-dismiss="modal" onclick="document.fileForm.reset()">&times;</button>
                     <h4 class="modal-title">Edit Faculty</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="" name="facultyForm" id="facultyForm">
+                    <form action="" name="fileForm" id="fileForm">
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input class="form-control" type="text" id="username" readonly/>
+                            <label for="fileid">FileID</label>
+                            <input class="form-control" type="text" id="fileid" readonly/>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input class="form-control" type="text" id="email" required/>
+                            <label for="filename">Filename</label>
+                            <input class="form-control" type="text" id="filename" required/>
                         </div>
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input class="form-control" type="text" id="name" required/>
+                            <label for="description">Description</label>
+                            <input class="form-control" type="text" id="description" required/>
                         </div>
                         <div class="form-group">
-                            <label for="contact">Contact No.</label>
-                            <input class="form-control" type="text" id="contact" required/>
+                            <label for="filetype">File Type</label>
+                            <input class="form-control" type="text" id="filetype" required/>
                         </div>
                         <div class="form-group">
-                            <label for="add">Address</label>
-                            <input class="form-control" type="text" id="add" required/>
+                            <label for="subject">Subject</label>
+                            <input class="form-control" type="text" id="subject" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="semester">Semester</label>
+                            <input class="form-control" type="text" id="semester" required/>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <span id="facultysaveresult"></span>
-                    <button class="btn btn-primary btn-sm" data-id="change" onclick="saveFacultyDetails(event)">Save</button>
-                    <button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="document.facultyForm.reset()">Close</button>
+                    <span id="filesaveresult"></span>
+                    <button class="btn btn-primary btn-sm" data-id="change" onclick="saveFile(event)">Save</button>
+                    <button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="document.fileForm.reset()">Close</button>
                 </div>
             </div>
         </div>
@@ -223,7 +227,7 @@
     </div>
 <!-- End of admin profile modal-->
     <script src="scripts/AdminHome.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
 </body>

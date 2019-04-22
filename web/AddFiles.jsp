@@ -1,6 +1,3 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.portal.dao.FacultyDAO"%>
-<%@page import="com.portal.dto.FacultyDTO"%>
 <%@page errorPage="errorpage.jsp" contentType="text/html"%>
 <!doctype html>
 <html lang="en">
@@ -8,14 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Site Administration | Dashboard</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link href="css/custom.css" rel="stylesheet">
 </head>
-<body onload="">
+<body onload="this.filesForm.reset();this.fileDetailsForm.reset();this.abortrequest.disabled = true">
     <%
-        ArrayList<FacultyDTO> facultyList = FacultyDAO.getAllFaculties();
         String username = (String)session.getAttribute("username");
         if(username == null){
             session.invalidate();
@@ -32,7 +27,7 @@
                 <span class="text-uppercase">Welcome, <strong id="admin"><a href="#" class="link" data-target="#adminProfile" data-toggle="modal"><%= username %></a><strong>.</span>
                 <a href="index.html" class="text-uppercase link">View Site</a> /
                 <a href="Email.jsp" class="text-uppercase link">Send Mail</a> /  
-                <a class="text-uppercase link"  data-target="#cngPassModal" data-toggle="modal">Change Password</a> /
+                <a href="#" class="text-uppercase link"  data-target="#cngPassModal" data-toggle="modal">Change Password</a> /
                 <a href="LoginControllerServlet?logout=logout" class="text-uppercase link">Logout</a>
             </div>
         </div>
@@ -48,7 +43,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="index.html" class="link">View Site</a></li>
+                <li><a href="#" class="link">View Site</a></li>
                 <li><a href="Email.jsp" class="link">Send Mail</a></li>
                 <li><a href="#" class="link" data-target="#cngPassModal" data-toggle="modal">Change Password</a></li>
                 <li><a href="LoginControllerServlet?logout=logout" class="link">Logout</a></li>
@@ -68,83 +63,95 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="AdminHome.jsp">Dashboard</a></li>
-                <li class="active">Faculty</li>
+                <li class="active">Upload Files</li>
             </ol>
         </div>
     </section>
-        
-                
+
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
                 <div class="container-fluid">
                     <div class="jumbotron addUserJumbo">
-                        <% if(facultyList.isEmpty()){
-                            out.println("<h2>No Data Found</h2>");
-                        }
-                        else{
-                            int count=0;
-                            out.println("<div class=\"page-header\"><h2>Faculty List&nbsp;&nbsp;<small>Click on Username/Email to Edit Details</small></h2></div>");
-                            out.println("<div class=\"table-responsive\"><table class=\"table table-striped\">");
-                            out.println("<thead><th>Username</th><th>Email</th><th>Name</th><th>Contact No.</th><th>Address</th><th>Action</th></thead><tbody>");
-                            for(FacultyDTO fac : facultyList){
-                              String facultyID = "facultyID"+count; 
-                              System.out.println(facultyID);
-                              out.println("<tr><td><a href=\"#\" class=link data-id=\""+count + "\"id=\""+facultyID+ "\" onclick=\"fillFacultyDetailsModal(event)\">"+fac.getUsername()+"</a></td><td>"+fac.getEmail()+"</td><td>"+fac.getFacultyName()+"</td><td>"+fac.getContactNo()+"</td><td>"+fac.getAddress()+"</td><td><a href=\"#\" onclick=\"deleteFacultyDetails(event)\">Delete</a></td></tr>");
-                              System.out.println(count);
-                              count++;
-                            }
-                            out.println("</tbody></table></div>");
-                        }
-                        %>
+                        <div class="page-header">
+                            <h4>Upload Files</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12">
+                                <fieldset id="filesFormFieldset">
+                                <form method="POST"  id="filesForm" class="addUser" name="filesForm" accept-charset="utf-8" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <!--<label for="file">Choose Files:</label>-->
+                                        <input type="file" value="Choose File" style="display:none" id="file" multiple/>
+                                        <button type="button" class="btn btn-primary btn-sm" id="choose-button">Choose Files</button>&nbsp;
+                                        <label id="filesNo">No File Selected</label>
+                                    </div>
+                                    <span id="filesDiv"></span>
+                                    <div >
+                                        <button type="button" class="btn btn-primary btn-sm"  onclick="uploadFiles()">Upload</button>&nbsp;
+                                        <button type="button" class="btn btn-primary btn-sm" name="abortrequest" id="abortrequest" onclick="abortRequest()" disabled>Cancel</button>&nbsp;
+                                        <span id="fileuploadresult" class="h5"></span><br>
+                                        <!--<button type="reset" for="filesForm" class="btn btn-primary btn-sm">Reset</button>-->
+                                        <br>
+                                        <div class="progress"  id="uploadProgress" style="height:28px; display:none">
+                                            <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100" id="uploadProgressBar" style="width:0%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                </fieldset> 
+                                
+                                <br><br>  
+                                <div id="fileDetailsDiv" style="display:none">    
+                                    <form action="" id="fileDetailsForm" name="fileDetailsForm" class="addUser">
+                                        <div class="form-group card-text">
+                                            <label for="name">File Name</label>
+                                            <input class="form-control" type="text" id="name" name="name"  readonly required/>
+                                        </div>
+                                        <div class="form-group card-text">
+                                            <label for="description">Description</label>
+                                            <input class="form-control" type="text" name="description" id="description" required/>
+                                        </div>
+                                        <div class="form-group card-text">
+                                            <label for="filetype">File Type</label>
+                                            <select id="filetype">
+                                                <option  name="filetype" value="timetable">TIME TABLE</option>
+                                                <option  name="filetype" value="scheme">SCHEME</option>
+                                                <option  name="filetype" value="syllabus">SYLLABUS</option>
+                                                <option  name="filetype" value="notice">NOTICE</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group card-text">
+                                            <label for="sem">Semester</label>
+                                            <select id="sem">
+                                                <option value="none">Not Applicable</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-primary btn-sm" data-id="add" id="saveFileDetails" onclick="saveFileDetailsForm(event)">Save</button>
+                                            <!--<button type="reset" for="fileDetailsForm" id="fileDetailsReset" class="btn btn-primary btn-sm">Reset</button>-->
+                                            <span id="filedetailssaveresult"></span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>    
-
-    <!-- Edit faculty Modal -->
-    <div class="modal" id="editFacultyModal" tabindex="-1">
-        <div class="modal-dialog modal-sm" >
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" data-dismiss="modal" onclick="document.facultyForm.reset()">&times;</button>
-                    <h4 class="modal-title">Edit Faculty</h4>
-                </div>
-                <div class="modal-body">
-                    <form action="" name="facultyForm" id="facultyForm">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input class="form-control" type="text" id="username" readonly/>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input class="form-control" type="text" id="email" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input class="form-control" type="text" id="name" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact">Contact No.</label>
-                            <input class="form-control" type="text" id="contact" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="add">Address</label>
-                            <input class="form-control" type="text" id="add" required/>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <span id="facultysaveresult"></span>
-                    <button class="btn btn-primary btn-sm" data-id="change" onclick="saveFacultyDetails(event)">Save</button>
-                    <button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="document.facultyForm.reset()">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End of edit faculty modal-->
+        
     
+        
     <!-- Change Password Modal -->
     <div class="modal" id="cngPassModal" tabindex="-1">
         <div class="modal-dialog modal-sm" >
@@ -161,7 +168,7 @@
                         </div>
                         <div class="form-group">
                             <label for="newPass">New Password</label>
-                            <input class="form-control" type="password" id="oldPass" required/>
+                            <input class="form-control" type="password" id="newPass" required/>
                         </div>
                         <div class="form-group">
                             <label for="confPass">Confirm New Password</label>
@@ -223,9 +230,8 @@
     </div>
 <!-- End of admin profile modal-->
     <script src="scripts/AdminHome.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
 </body>
 </html>
-

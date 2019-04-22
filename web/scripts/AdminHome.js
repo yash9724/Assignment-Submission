@@ -695,7 +695,7 @@ function fillStudentDetailsModal(event){
     $("#editStudentModal").modal();
 }
 
-//----------------------------------------------------------fillMarksDetailsModal------------------------------------------------------
+//--------------------------------------------fillMarksDetailsModal------------------------------------------------------
 
 
 function fillMarksDetailsModal(event){
@@ -713,3 +713,210 @@ function fillMarksDetailsModal(event){
     
     $("#editMarksModal").modal();
 }
+
+//---------------------------------------------------------uploadFiles()------------------------------------------------------
+
+var fileNames = [];
+function uploadFiles(){
+    console.log("uploadFiles executed");
+    var files = document.querySelector("#filesForm").querySelector("#file").files;
+    if(files.length === 0){
+        document.getElementById("fileuploadresult").innerHTML = "<font color=\"red\">Choose Atleast 1 File To Upload.</font>";; 
+        setTimeout(function(){
+                document.getElementById("fileuploadresult").innerHTML = "";
+            },3000);      
+        return;
+    }
+    var formdata = new FormData();
+    for(var i=0 ; i<files.length ; i++){
+        formdata.append('file',files[i]);
+        console.log(files[i].name+' '+files.size);
+        fileNames.push(files[i].name);
+    }
+    ajaxreq = new XMLHttpRequest();
+    ajaxreq.open("POST","FileUploadServletController",true);
+    // ajaxreq.setRequestHeader("content-type","multipart/form-data");
+    // A FormData object can be send as the POST data.
+    // The FormData object automatically sets the Content-Type of the HTTP request,
+    // depending on the type of the request data. In case of a file,
+    // Content-Type of the HTTP request is set as multipart/form-data.
+    
+    // AJAX request finished
+    ajaxreq.addEventListener('load', function(e){
+        // request.response will hold the response from the server
+        console.log(ajaxreq.response);
+        if(ajaxreq.readyState === 4){
+            var resp = ajaxreq.responseText;
+            if(resp.trim() === "success"){
+                document.getElementById("fileuploadresult").innerHTML = "<font color=\"green\">Files Uploaded Successfully.</font>"; 
+                document.getElementById("fileDetailsDiv").style.display = "block";
+                document.getElementById("filesFormFieldset").disabled = true;
+                console.log(fileNames);
+                fillFileDetailsForm();
+            }else{
+                document.getElementById("fileuploadresult").innerHTML = "<font color=\"red\">Error in Uploading Files. Try Again Later.</font>";
+            } 
+            setTimeout(function(){
+                document.getElementById("fileuploadresult").innerHTML = "";
+                document.getElementById("uploadProgress").style.display = "none";
+            },3000);
+        }
+    });
+
+    // Upload progress on request.upload
+    ajaxreq.upload.addEventListener('progress', function(e){
+        document.getElementById("abortrequest").disabled = false;
+        document.getElementById("uploadProgress").style.display = "block";
+        var percent_complete = (e.loaded / e.total)*100;
+        var progress_bar = document.getElementById("uploadProgressBar");
+        document.getElementById("fileuploadresult").innerHTML = "<font color=\"green\">" + percent_complete.toPrecision(3) + "%</font>";
+        progress_bar.style.width = percent_complete + "%";
+        console.log(percent_complete);
+    });
+    
+    ajaxreq.send(formdata);
+    console.log("After request for uploading has been sent");
+}
+
+var fileDetails = [];
+var fileCount = 0;
+
+function fillFileDetailsForm(){
+    var fileDetailsForm = document.forms["fileDetailsForm"];
+    fileDetailsForm.querySelector("#name").value = fileNames[fileCount];
+}
+
+function saveFileDetailsForm(event){
+    var form = document.getElementById("fileDetailsForm");
+    var name = form.querySelector("#name").value;
+    var description = form.querySelector("#description").value;
+    var filetype = form.querySelector("#filetype").value;
+    var semester = form.querySelector("#sem").value;
+    console.log(name+' '+description+' '+filetype+' '+semester);
+    fileDetails.push({"name":name,"description":description,"filetype":filetype,"semester":semester});
+    fileCount++;
+    if(fileCount === fileNames.length){
+        document.getElementById("saveFileDetails").disabled = true;
+        //document.getElementById("fileDetailsReset").disabled = true;
+        submitFileDetails();
+    }else if(fileCount < fileNames.length){
+        form.reset();
+        fillFileDetailsForm();
+    }
+}
+
+function submitFileDetails(){
+    console.log(fileDetails);
+    ajaxreq = new XMLHttpRequest();
+    ajaxreq.onreadystatechange = function(){
+        if(ajaxreq.readyState === 4){
+            var resp = ajaxreq.responseText;
+            if(resp.trim() === "success"){
+                document.getElementById("filedetailssaveresult").innerHTML =  "<font color=\"green\">Details Saved Successfully.</font>"; 
+            }else{
+                document.getElementById("filedetailssaveresult").innerHTML =  "<font color=\"green\">Error in saving details</font>"; 
+            }
+            setTimeout(function(){
+                document.getElementById("filedetailssaveresult").innerHTML =  "";
+                location.reload(true);
+            },6000);
+        }
+    };
+    ajaxreq.open("POST","FileUploadServletController",true);
+    ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+    data = JSON.stringify(fileDetails);
+    ajaxreq.send("data="+data+"&data_id=details");
+    console.log("after request for saving file details have been sent");
+}
+function deleteFileDetails(event){
+    console.log("inside deleteFileDetails");
+    console.log(event.target.parentElement.parentElement);
+    var col = event.target.parentElement;
+    var row = col.parentElement;
+    var fileDetails = row.children;
+    var fileId = fileDetails[0].innerText;
+    var fileName = fileDetails[1].innerText;
+    var fileType = fileDetails[3].innerText;
+    
+   
+    console.log("Details of record to be deleted: "+fileId+' '+fileName+' '+fileType);
+    ajaxreq = new XMLHttpRequest();
+    ajaxreq.onreadystatechange = function(){
+        console.log("processresponse executed");
+        if(ajaxreq.readyState === 4){
+            if (ajaxreq.status===200 || window.location.href.indexOf("http")===-1){
+                var resp = ajaxreq.responseText;
+                if(resp.trim() === "success"){
+                    console.log("inside if");
+                    var row = event.target.parentElement.parentElement;
+                    row.parentNode.removeChild(row);
+                }else{
+                    console.log("inside else");
+                    col.innerHTML = "<h6><font color=\"red\">Error in Deleting.</font></h6>";
+                    setTimeout(function(){
+                    console.log("Inside settimeout");
+                    var node = document.createElement("a");                                    
+                    var textnode = document.createTextNode("Delete");         
+                    node.appendChild(textnode);  
+                    col.replaceChild(node,col.lastChild);
+                    col.lastChild.setAttribute("href","# ");
+                },5000);
+                }
+            }else{
+                alert("An error has occured making the request");
+            }    
+        }
+    };
+    ajaxreq.open("POST","EditFileDetailsController",true);
+    ajaxreq.setRequestHeader("content-type","application/x-www-form-urlencoded");
+    ajaxreq.send("data_id=delete"+"&fileId="+fileId+"&filetype="+fileType+"&filename="+fileName);
+    console.log("After request for deleting file details has been sent");
+}
+
+function fillFileDetailsModal(event){
+    console.log("inside fillmarksdetailmodal function");
+    console.log(event.target.id);
+    console.log(document.getElementById(event.target.id).parentElement.parentElement.children);
+    var par = document.getElementById(event.target.id).parentElement.parentElement.children;
+    var fileForm = document.getElementById("fileForm");
+    fileForm.querySelector("#fileid").value = par[0].innerText;
+    fileForm.querySelector("#filename").value = par[1].innerText;
+    fileForm.querySelector("#description").value = par[2].innerText;
+    fileForm.querySelector("#filetype").value = par[3].innerText;
+    fileForm.querySelector("#subject").value = par[4].innerText;
+    fileForm.querySelector("#semester").value = par[5].innerText;
+    
+    $("#editFilesModal").modal();
+}
+
+
+
+function abortRequest(){
+    ajaxreq.abort();
+}
+document.querySelector("#filesForm").querySelector("#choose-button").addEventListener("click",function(){
+    document.querySelector("#filesForm").querySelector("#file").click();
+});
+
+document.querySelector('#filesForm').querySelector("#file").addEventListener('change', function() {
+    document.getElementById("fileDetailsDiv").style.display = "none";
+    var div = document.querySelector("#filesForm").querySelector("#filesDiv").innerHTML = "";
+    var file = this.files;
+
+    var len = file.length;
+    console.log("Number Of Files Selected: "+len);
+    if(len !== 0){
+        var filesNo = document.querySelector("#filesForm").querySelector("#filesNo").innerText = len+" File(s) Selected." ;
+        var div = document.querySelector("#filesForm").querySelector("#filesDiv");
+//            brkNode = document.createElement("br");
+//            div.appendChild(brkNode);
+        for(var i=0;i<len;i++){
+            var name = file[i].name;
+            var node = document.createElement("ul");                 
+            var textnode = document.createTextNode(name);         
+            node.appendChild(textnode);                              
+            div.appendChild(node);
+        }
+        //div.appendChild(brkNode);
+    }
+});

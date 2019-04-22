@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    
-     <session-config>
+    <servlet>
+        <servlet-name>EditFileDetailsController</servlet-name>
+        <servlet-class>com.portal.controller.EditFileDetailsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FileUploadServletController</servlet-name>
+        <url-pattern>/FileUploadServletController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileDownloadServletController</servlet-name>
+        <url-pattern>/FileDownloadServletController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditFileDetailsController</servlet-name>
+        <url-pattern>/EditFileDetailsController</url-pattern>
+    </servlet-mapping>
+    <session-config>
         <session-timeout>-1</session-timeout>
     </session-config>
     <servlet>
@@ -55,6 +70,14 @@
     <servlet>
         <servlet-name>SaveNewUserController</servlet-name>
         <servlet-class>com.portal.controller.SaveNewUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FileUploadServletController</servlet-name>
+        <servlet-class>com.portal.controller.FileUploadServletController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FileDownloadServletController</servlet-name>
+        <servlet-class>com.portal.controller.FileDownloadServletController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginControllerServlet</servlet-name>

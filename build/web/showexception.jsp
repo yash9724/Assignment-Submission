@@ -7,6 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     Exception e = (Exception)request.getAttribute("exception");
-    out.println("Exception while trying to log in. We will fix this soon<br>");
+    out.println("Problem occurred while trying to log in. We will fix this soon<br>");
 %>
 

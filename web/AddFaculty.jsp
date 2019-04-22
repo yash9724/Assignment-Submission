@@ -107,7 +107,7 @@
                             <div>
                                 <span id="facultysaveresult"></span>
                                 <button class="btn btn-primary btn-sm" data-id="add" onclick="saveFacultyDetails(event)">Save</button>
-                                <button type="reset" for="faculty-form" class="btn btn-primary btn-sm" onclick="document.facultyForm.reset()">Discard</button>
+                                <button type="reset" for="facultyform" class="btn btn-primary btn-sm" onclick="document.facultyForm.reset()">Discard</button>
                             </div>
                     </div>
                     </div>

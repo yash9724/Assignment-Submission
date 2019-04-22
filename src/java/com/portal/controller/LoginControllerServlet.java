@@ -9,6 +9,7 @@ import com.portal.dao.LoginDAO;
 import com.portal.dto.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Dictionary;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -64,11 +65,13 @@ public class LoginControllerServlet extends HttpServlet {
             user.setUsername(username);
             user.setPassword(password);
             user.setUsertype(usertype);
-            boolean result = LoginDAO.validateUser(user);
+            Dictionary result = LoginDAO.validateUser(user);
             //System.out.println("Result in Loginntroller:" + result);
             request.setAttribute("username",username);
             request.setAttribute("usertype",usertype);
-            request.setAttribute("result",result);
+            request.setAttribute("result",result.get("result"));
+            request.setAttribute("lastlogged",result.get("lastlogged"));
+            request.setAttribute("status",result.get("status"));
             rd = request.getRequestDispatcher("loginresponse.jsp");
         }catch(Exception e){
             request.setAttribute("exception", e);

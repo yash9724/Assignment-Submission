@@ -46,7 +46,7 @@
                 <li><a href="#" class="link">View Site</a></li>
                 <li><a href="Email.jsp" class="link">Send Mail</a></li>
                 <li><a href="#" class="link" data-target="#cngPassModal" data-toggle="modal">Change Password</a></li>
-                <li><a href=""LoginControllerServlet?logout=logout"" class="link">Logout</a></li>
+                <li><a href=LoginControllerServlet?logout=logout" class="link">Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -146,18 +146,18 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr>
+<!--                            <tr>
                                 <th>Query</th>
                                 <td  class="text-right">
-                                    <!-- <a href="#">
+                                     <a href="#">
                                         <span class="glyphicon glyphicon-plus h4"> Add</span>
-                                    </a> -->
+                                    </a> 
                                     &nbsp;&nbsp;
                                     <a href="#">
                                         <span class="glyphicon glyphicon-pencil h4"> Change</span>
                                     </a>
                                 </td>
-                            </tr>
+                            </tr>-->
                           </tbody>
                         </table>
                     </div>
@@ -171,11 +171,11 @@
                                 <tr>
                                     <th>Notices</th>
                                     <td  class="text-right">
-                                        <a href="#">
+                                        <a href="AddFiles.jsp">
                                             <span class="glyphicon glyphicon-plus h4"> Add</span>
                                         </a>
                                         &nbsp;&nbsp;
-                                        <a href="#">
+                                        <a href="ChangeFiles.jsp">
                                             <span class="glyphicon glyphicon-pencil h4"> Change</span>
                                         </a>
                                     </td>
@@ -183,11 +183,11 @@
                                 <tr>
                                     <th>Syllabus and Schemes</th>
                                     <td  class="text-right">
-                                        <a href="#">
+                                        <a href="AddFiles.jsp">
                                             <span class="glyphicon glyphicon-plus h4"> Add</span>
                                         </a>
                                         &nbsp;&nbsp;
-                                        <a href="#">
+                                        <a href="ChangeFiles.jsp">
                                             <span class="glyphicon glyphicon-pencil h4"> Change</span>
                                         </a>
                                     </td>
@@ -195,11 +195,11 @@
                                     <tr>
                                         <th>Time Tables</th>
                                         <td  class="text-right">
-                                            <a href="#">
+                                            <a href="AddFiles.jsp">
                                                 <span class="glyphicon glyphicon-plus h4"> Add</span>
                                             </a>
                                             &nbsp;&nbsp;
-                                            <a href="#">
+                                            <a href="ChangeFiles.jsp">
                                                 <span class="glyphicon glyphicon-pencil h4"> Change</span>
                                             </a>
                                         </td>

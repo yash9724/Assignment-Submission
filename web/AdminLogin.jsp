@@ -35,7 +35,7 @@
         <div class="col-xs-1 col-sm-6"></div>
 
         <script src="scripts/login.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
