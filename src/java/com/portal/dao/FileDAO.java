@@ -167,4 +167,40 @@ public class FileDAO {
        System.out.println("result: "+result);
        return result>0;
     }
+     
+     public static ArrayList<FileDTO> getAllNotices() throws SQLException{
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ArrayList noticeList = null;
+        int result;
+        try{
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("select * from files where upper(file_type)=?");
+        }catch(NullPointerException npe){
+            System.out.println("Null Pointer Exception in FileDAO getAllFiles:"+npe);
+            System.exit(0);
+        }
+
+        noticeList = new ArrayList<>();
+        ps.setString(1,"notice".toUpperCase());
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+             String fileId = rs.getString("file_id");
+             String filename = rs.getString("file_name");
+             String subject = rs.getString("subject");
+             String description = rs.getString("description");
+             String filetype = rs.getString("file_type");
+             String semester = rs.getString("sem");
+
+             FileDTO fileObj = new FileDTO();
+             fileObj.setFileId(fileId);
+             fileObj.setFileName(filename);
+             fileObj.setSubject(subject);
+             fileObj.setDescription(description);
+             fileObj.setFileType(filetype);
+             fileObj.setSemester(semester);
+             noticeList.add(fileObj);
+        }
+        return noticeList;
+      }
 }

@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <servlet>
+<!--    <servlet>
         <servlet-name>EditFileDetailsController</servlet-name>
         <servlet-class>com.portal.controller.EditFileDetailsController</servlet-class>
-    </servlet>
-    <servlet-mapping>
+    </servlet>-->
+<!--    <servlet-mapping>
         <servlet-name>FileUploadServletController</servlet-name>
         <url-pattern>/FileUploadServletController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FileDownloadServletController</servlet-name>
         <url-pattern>/FileDownloadServletController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
+    </servlet-mapping>-->
+<!--    <servlet-mapping>
         <servlet-name>EditFileDetailsController</servlet-name>
         <url-pattern>/EditFileDetailsController</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <session-config>
         <session-timeout>-1</session-timeout>
     </session-config>
-    <servlet>
+<!--    <servlet>
         <servlet-name>LoginControllerServlet</servlet-name>
         <servlet-class>com.portal.controller.LoginControllerServlet</servlet-class>
-    </servlet>
+    </servlet>-->
     <servlet>
         <servlet-name>adminlogin</servlet-name>
         <jsp-file>/AdminLogin.jsp</jsp-file>
     </servlet>
-    <servlet>
+<!--    <servlet>
         <servlet-name>AdminControllerServlet</servlet-name>
         <servlet-class>com.portal.controller.AdminControllerServlet</servlet-class>
-    </servlet>
+    </servlet>-->
     <servlet>
         <servlet-name>FileDownloadServlet</servlet-name>
         <servlet-class>com.portal.controller.FileDownloadServlet</servlet-class>
@@ -39,58 +39,58 @@
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>com.portal.controller.FileUploadServlet</servlet-class>
     </servlet>
-    <servlet>
+<!--    <servlet>
         <servlet-name>SaveAdminDetailsController</servlet-name>
         <servlet-class>com.portal.controller.SaveAdminDetailsController</servlet-class>
-    </servlet>
-    <servlet>
+    </servlet>-->
+<!--    <servlet>
         <servlet-name>ChangeAdminPasswordServlet</servlet-name>
         <servlet-class>com.portal.controller.ChangeAdminPasswordServlet</servlet-class>
-    </servlet>
-    <servlet>
+    </servlet>-->
+<!--    <servlet>
         <servlet-name>EmailControllerServlet</servlet-name>
         <servlet-class>com.portal.controller.EmailControllerServlet</servlet-class>
-    </servlet>
-    <servlet>
+    </servlet>-->
+<!--    <servlet>
         <servlet-name>SaveFacultyDetailsController</servlet-name>
         <servlet-class>com.portal.controller.SaveFacultyDetailsController</servlet-class>
-    </servlet>
-    <servlet>
+    </servlet>-->
+<!--    <servlet>
         <servlet-name>SaveStudentDetailsController</servlet-name>
         <servlet-class>com.portal.controller.SaveStudentDetailsController</servlet-class>
-    </servlet>
-    <servlet>
+    </servlet>-->
+<!--    <servlet>
         <servlet-name>SaveSubjectDetailsController</servlet-name>
         <servlet-class>com.portal.controller.SaveSubjectDetailsController</servlet-class>
-    </servlet>
-    <servlet>
+    </servlet>-->
+<!--    <servlet>
         <servlet-name>SaveStudentMarksController</servlet-name>
         <servlet-class>com.portal.controller.SaveStudentMarksController</servlet-class>
-    </servlet>
-    <servlet>
+    </servlet>-->
+<!--    <servlet>
         <servlet-name>SaveNewUserController</servlet-name>
         <servlet-class>com.portal.controller.SaveNewUserController</servlet-class>
-    </servlet>
-    <servlet>
+    </servlet>-->
+<!--    <servlet>
         <servlet-name>FileUploadServletController</servlet-name>
         <servlet-class>com.portal.controller.FileUploadServletController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FileDownloadServletController</servlet-name>
         <servlet-class>com.portal.controller.FileDownloadServletController</servlet-class>
-    </servlet>
-    <servlet-mapping>
+    </servlet>-->
+<!--    <servlet-mapping>
         <servlet-name>LoginControllerServlet</servlet-name>
         <url-pattern>/LoginControllerServlet</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>adminlogin</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+<!--    <servlet-mapping>
         <servlet-name>AdminControllerServlet</servlet-name>
         <url-pattern>/AdminControllerServlet</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>FileDownloadServlet</servlet-name>
         <url-pattern>/FileDownloadServlet</url-pattern>
@@ -99,23 +99,23 @@
         <servlet-name>FileUploadServlet</servlet-name>
         <url-pattern>/FileUploadServlet</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+<!--    <servlet-mapping>
         <servlet-name>SaveAdminDetailsController</servlet-name>
         <url-pattern>/SaveAdminDetailsController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
+    </servlet-mapping>-->
+<!--    <servlet-mapping>
         <servlet-name>ChangeAdminPasswordServlet</servlet-name>
         <url-pattern>/ChangeAdminPasswordServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
+    </servlet-mapping>-->
+<!--    <servlet-mapping>
         <servlet-name>EmailControllerServlet</servlet-name>
         <url-pattern>/EmailControllerServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
+    </servlet-mapping>-->
+<!--    <servlet-mapping>
         <servlet-name>SaveFacultyDetailsController</servlet-name>
         <url-pattern>/SaveFacultyDetailsController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
+    </servlet-mapping>-->
+<!--    <servlet-mapping>
         <servlet-name>SaveStudentDetailsController</servlet-name>
         <url-pattern>/SaveStudentDetailsController</url-pattern>
     </servlet-mapping>
@@ -130,7 +130,7 @@
     <servlet-mapping>
         <servlet-name>SaveNewUserController</servlet-name>
         <url-pattern>/SaveNewUserController</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.servlet.RequestDispatcher;
 import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
@@ -25,6 +24,7 @@ import org.json.simple.parser.JSONParser;
  *
  * @author user
  */
+@WebServlet(name = "EmailControllerServlet", urlPatterns = {"/EmailControllerServlet"})
 public class EmailControllerServlet extends HttpServlet {
 
     /**
